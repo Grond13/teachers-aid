@@ -25,7 +25,7 @@ import axios from 'axios';
 
 
 export default defineComponent({
-  name: "Don't know yet",
+  name: "Don't know yet.",
   data(){
     return{
       Data: null
