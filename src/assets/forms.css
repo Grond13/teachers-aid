@@ -1,0 +1,22 @@
+@import './base.css';
+
+div.formWrapper {
+    background-color: var(--bg-very-light-green);
+    padding: 15px 45px 20px;
+    border-radius: 10px;
+    width: 40%;
+    min-width: 500px;
+    height: fit-content;
+}
+
+.submitButton{
+    background-color: var(--bg-dark-green);
+    border: solid 2px var(--bg-darker-green);
+    margin: 10px 0 0;
+    padding: 5px 15px;
+}
+
+.submitButton:hover{
+    background-color: var(--bg-darker-green);
+    border: solid 2px var(--bg-darker-green);
+}
