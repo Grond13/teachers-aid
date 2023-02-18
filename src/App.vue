@@ -1,11 +1,11 @@
 <template>
   <header>
-    <div>{{this.Data}}</div>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />    
+    <div>{{ this.name }}</div>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
       <button v-on:click="test()">Test</button>
-      
+
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -26,24 +26,38 @@ import axios from 'axios';
 
 export default defineComponent({
   name: "Don't know yet.",
-  data(){
-    return{
-      Data: null
+  data() {
+    return {
+      name: 'AJAX test',
+      surname: 'testtest',
+      email: 'ajax@test.com',
+      password: 'User123',
     }
   },
-  methods:{
-    /*async test(){
-      const response = await axios.get('http://localhost/teachers-aid-api/test.php')
-      this.Data = response.data      
-      console.log(response.data)   
-    }*/
-    async test(){
-      const response = await axios.post('http://localhost/teachers-aid-api/View/InsertTeacher.php', {name: 'New' , surname: 'Teacher', email: 'newteacher4@example.com', password: 'User123'})
-      this.Data = response.data      
-      console.log(response.data)
+  methods: {
+    async test() {
+      const data = {
+        name: this.name,
+        surname: this.surname,
+        email: this.email,
+        password: this.password
+      };
+      console.log(data);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://localhost/teachers-aid-api/View/InsertTeacher.php", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+        }
+      };
+
+      xhr.send(JSON.stringify(data));
     }
   },
-  async mounted(){
+  async mounted() {
     await this.test();
   }
 })
