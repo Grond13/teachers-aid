@@ -1,7 +1,9 @@
-export async function login(email, password) {
-    const data = {      
-      email: email,
-      password: password
+export async function register(name, surname, email, password) {
+    const data = {
+        name: name,
+        surname: surname,
+        email: email,
+        password: password
     };
     console.log(data);
 
@@ -10,10 +12,10 @@ export async function login(email, password) {
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log(xhr.responseText);
-      }
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
     };
 
     xhr.send(JSON.stringify(data));
-  }
+}
