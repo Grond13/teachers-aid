@@ -3,30 +3,36 @@
         <h2>Registration</h2>
         <form @submit.prevent="submitForm()">
             <label for="name" class="form-label">Name: </label>
-            <input v-model="name" type="text" :class="{'form-control': true, 'is-invalid': !nameIsValid }" id="name" required>
+            <input v-model="name" type="text" :class="{ 'form-control': true, 'is-invalid': !nameIsValid }" id="name"
+                required>
             <div v-if="!nameIsValid" id="emailInvalidError" class="invalid-feedback">
-                Please enter a valid name. 
+                Please enter a valid name.
             </div>
 
             <label for="surname" class="form-label">Surname: </label>
-            <input v-model="surname" type="text" :class="{ 'form-control': true, 'is-invalid': !surnameIsValid }" id="surname" required>            
+            <input v-model="surname" type="text" :class="{ 'form-control': true, 'is-invalid': !surnameIsValid }"
+                id="surname" required>
             <div v-if="!surnameIsValid" id="emailInvalidError" class="invalid-feedback">
-                Please enter a valid surname. 
+                Please enter a valid surname.
             </div>
 
             <label for="email" class="form-label">Email: </label>
-            <input v-model="email" type="email" :class="{ 'form-control': true, 'is-invalid': !emailIsValid }" id="email" required>
+            <input v-model="email" type="email" :class="{ 'form-control': true, 'is-invalid': !emailIsValid }" id="email"
+                required>
             <div v-if="!emailIsValid" id="emailInvalidError" class="invalid-feedback">
-                Please enter a valid email address. 
+                Please enter a valid email address.
             </div>
 
             <label for="password" class="form-label">Password: </label>
-            <input v-model="password" type="password" :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password" required>
-            
+            <input v-model="password" type="password"
+                :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password" required>
+
             <label for="password2" class="form-label">Password again: </label>
-            <input v-model="password2" type="password" :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch}" id="password2" required>
+            <input v-model="password2" type="password"
+                :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password2"
+                required>
             <div v-if="!passwordIsValid" id="passwordInvalidError" class="invalid-feedback">
-                Password has to be at least 7 characters long. 
+                Password has to be at least 7 characters long.
             </div>
             <div v-if="passwordsMatch === false" id="noMatchError" class="invalid-feedback">
                 Passwords do not match.
@@ -34,6 +40,9 @@
 
             <div class="center">
                 <input type="submit" value="Register" class="btn btn-primary submitButton">
+            </div>
+            <div class="center">
+                <a href="#" @click="switchView()">Register</a>
             </div>
         </form>
     </div>
@@ -63,7 +72,7 @@ export default {
                 this.nameIsValid = false;
                 return;
             }
-            else this.nameIsValid = true;            
+            else this.nameIsValid = true;
 
             if (!RegistrationViewModel.validateName(this.surname)) {
                 this.surnameIsValid = false;
@@ -85,7 +94,7 @@ export default {
                 return;
             }
             else this.passwordsMatch = true;
-            if(!pwCheck.isValid){
+            if (!pwCheck.isValid) {
                 this.passwordIsValid = false;
                 console.log("passwords are not valid");
                 return;
@@ -93,11 +102,12 @@ export default {
             else this.passwordIsValid = true;
 
             RegistrationViewModel.register(this.name, this.surname, this.email, this.password);
+        },
+        switchView() {
+            this.$emit('switch-view', true);
         }
     }
 }
 </script>
 
-<style scoped>
-@import '../assets/forms.css';
-</style>
+<style scoped>@import '../assets/forms.css';</style>

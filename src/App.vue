@@ -1,13 +1,12 @@
 <template>
   <initial-header-view></initial-header-view>
 
-  <div class="wrapper">    
-      <login-view></login-view>
-      <registration-view></registration-view>    
-
-    <button v-on:click="login()">Test</button>
+  <div class="wrapper">
+    <login-view v-if="loginActive" v-on:switch-view="onSwitchView"></login-view>
+    <registration-view v-else v-on:switch-view="onSwitchView"></registration-view>
   </div>
-<!-- <RouterView />--></template>
+  <!-- <RouterView />-->
+</template>
 
 
 <script>
@@ -23,25 +22,21 @@ export default defineComponent({
   name: "Don't know yet.",
   data() {
     return {
-      name: 'AJAX test',
-      surname: 'testtest',
-      email: 'ajax@test2.com',
-      password: 'User123',
+      loginActive: true,
     }
   },
   methods: {
-    async login() {
-      await loginModel.login(this.email, this.password);
+    onSwitchView(value) {      
+      this.loginActive = value;
     }
   },
   components: {
     'initial-header-view': initialHeaderView,
     'login-view': LoginView,
     'registration-view': RegistrationView,
-  }
+  },
 })
 
 </script>
-
 
 <style scoped></style>

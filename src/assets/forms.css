@@ -12,11 +12,19 @@ div.formWrapper {
 .submitButton{
     background-color: var(--bg-dark-green);
     border: solid 2px var(--bg-darker-green);
-    margin: 10px 0 0;
+    margin: 15px 0 0;
     padding: 5px 15px;
 }
 
 .submitButton:hover{
     background-color: var(--bg-darker-green);
     border: solid 2px var(--bg-darker-green);
+}
+
+a{
+    margin: 8px 0 0;
+}
+
+a:hover{
+    text-decoration: underline;    
 }
