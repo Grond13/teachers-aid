@@ -42,7 +42,7 @@
                 <input type="submit" value="Register" class="btn btn-primary submitButton">
             </div>
             <div class="center">
-                <a href="#" @click="switchView()">Register</a>
+                <a href="#" @click="switchView()">Login</a>
             </div>
         </form>
     </div>
@@ -102,6 +102,7 @@ export default {
             else this.passwordIsValid = true;
 
             RegistrationViewModel.register(this.name, this.surname, this.email, this.password);
+            this.switchView();
         },
         switchView() {
             this.$emit('switch-view', true);

@@ -6,7 +6,7 @@ export async function login(email, password) {
   console.log(data);
 
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://localhost/teachers-aid-api/View/InsertTeacher.php", true); //TODO: Implement and change to login
+  xhr.open("POST", "http://localhost/teachers-aid-api/Login.php", true); 
   xhr.setRequestHeader("Content-Type", "application/json");
 
   xhr.onreadystatechange = function () {
