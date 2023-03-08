@@ -14,7 +14,7 @@
             </div>
             <div class="center">
                 <a href="#" @click="switchView()">Register</a>
-            </div>
+            </div>            
         </form>
 
     </div>

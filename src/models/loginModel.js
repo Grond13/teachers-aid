@@ -15,7 +15,7 @@ export async function login(email, password) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       console.log(xhr.responseText);
-      router.push("main");
+      router.push({ name: 'main' });
     }
   };
 
