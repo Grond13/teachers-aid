@@ -5,7 +5,7 @@ export async function register(name, surname, email, password) {
         email: email,
         password: password
     };
-    console.log(data);
+    //console.log(data);
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost/teachers-aid-api/View/InsertTeacher.php", true); //TODO: Implement and change to login

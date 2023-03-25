@@ -5,16 +5,16 @@ import Main from '../Main.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [    
+  routes: [
     {
       path: '/',
       name: 'initial',
-      component: Initial
+      component: () => import(/* webpackChunkName: "initial" */ '../views/InitialView.vue')
     },
     {
       path: '/main',
       name: 'main',
-      component: Main
+      component: () => import(/* webpackChunkName: "main" */ '../Main.vue')
     }
   ]
 });
