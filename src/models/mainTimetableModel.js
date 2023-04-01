@@ -8,6 +8,7 @@ export async function GetTimetable() {
           if (xhr.readyState === 4) {
             if (xhr.status === 200) {
               resolve(xhr.responseText);
+              //console.log(xhr.responseText);
             } else {
               reject(new Error(`HTTP error: ${xhr.status}`));
             }

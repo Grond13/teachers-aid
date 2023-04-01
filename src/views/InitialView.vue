@@ -2,7 +2,7 @@
     <initial-header-view></initial-header-view>
 
     <div class="wrapper">
-        <login-view :router="router" v-if="loginActive" v-on:switch-view="onSwitchView"></login-view>
+        <login-view v-if="loginActive" v-on:switch-view="onSwitchView"></login-view>
         <registration-view v-else v-on:switch-view="onSwitchView"></registration-view>
     </div>
 </template>

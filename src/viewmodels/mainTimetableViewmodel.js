@@ -22,10 +22,12 @@ export async function GetTimetable() {
             }
             else {
                 result += `<td>
-                <div class="lesson-name">${days[day][time].name}</div>
-                <div class="lesson-classroom">${days[day][time].classroom}</div>
-                <div class="lesson-note">${days[day][time].note}</div>
-            </td>`;
+                <div class="lesson-name">` + days[day][time].name + `</div>
+                <div class="lesson-classroom">` + days[day][time].classroom + `</div>`;
+                if(days[day][time].note != "")               
+                    result += `<div class="lesson-note">` + days[day][time].note + `</div>`;
+                
+                result += `</td>`;
             }
         }
         result += "</tr>";
