@@ -1,46 +1,44 @@
 import * as mainTimetableModel from '../models/mainTimetableModel.js';
+import { v4 as uuidv4 } from 'uuid';
 const startTimes = ["08:00:00", "08:55:00", "10:00:00", "10:55:00", "11:50:00", "12:45:00", "13:40:00", "14:35:00", "15:30:00"];
+
 
 
 export async function GetTimetable() {
     const raw = await mainTimetableModel.GetTimetable();
     var classes = JSON.parse(raw);
-    console.log(classes);
+    //console.log(classes);
     var days = {
-        Monday: getClasses(classes.filter(element => element['day'] == 'monday')),
-        Tuesday: getClasses(classes.filter(element => element['day'] == 'tuesday')),
-        Wednesday: getClasses(classes.filter(element => element['day'] == 'wednesday')),
-        Thursday: getClasses(classes.filter(element => element['day'] == 'thursday')),
-        Friday: getClasses(classes.filter(element => element['day'] == 'friday'))
+        Monday: getClasses(classes.filter(element => element['day'] == 'monday'), 'monday'),
+        Tuesday: getClasses(classes.filter(element => element['day'] == 'tuesday'), 'tuesday'),
+        Wednesday: getClasses(classes.filter(element => element['day'] == 'wednesday'), 'wednesday'),
+        Thursday: getClasses(classes.filter(element => element['day'] == 'thursday'), 'thursday'),
+        Friday: getClasses(classes.filter(element => element['day'] == 'friday'), 'friday')
     };
-    var result = "<tbody>";
+    const rows = [];
     for (const day in days) {
-        result += "<tr><td>" + day +"</td>";
+        const classes = [];
         for (const time in days[day]) {
-            if (days[day][time] == null) {
-                result += "<td></td>";
-            }
-            else {
-                result += `<td>
-                <div class="lesson-name">` + days[day][time].name + `</div>
-                <div class="lesson-classroom">` + days[day][time].classroom + `</div>`;
-                if(days[day][time].note != "")               
-                    result += `<div class="lesson-note">` + days[day][time].note + `</div>`;
-                
-                result += `</td>`;
-            }
+            classes.push(days[day][time] || null);
         }
-        result += "</tr>";
+        rows.push({ day, classes });
     }
-    result += "</tbody>";
-    return result;
+    console.log(rows);
+    return rows;
 }
 
-function getClasses(items) {
+function getClasses(items, day) {
     const result = {};
     for (let i = 0; i < startTimes.length; i++) {
         const startTime = startTimes[i];
-        const item = items.find(item => item.start === startTime);
+        const item = items.find(item => item.start === startTime) || { };        
+        item.uuid = uuidv4();
+        if(item.day == null){
+            item.day = day;
+        }
+        if(item.start == null){
+            item.start = startTime;
+        }
         result[startTime] = item || null;
     }
     return result;

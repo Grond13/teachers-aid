@@ -1,41 +1,44 @@
 <template>
-    <div class="wrapper">
-        <table id="timetable">
-            <thead>
-                <tr>
-                    <th>Day</th>
-                    <th v-for="time in times">{{ time }}</th>
-                </tr>
-            </thead>
-
-        </table>
-    </div>
+    <table id="timetable">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th v-for="time in times">{{ time }}</th>
+            </tr>
+        </thead>
+        <tbody v-if="days.length">
+            <TableRow v-for="(day, index) in days" :key="index" :day="day['day']" :lessons="day['classes']" v-on:editClass="onEditClass" />
+        </tbody>
+    </table>
 </template>
 <script>
-import * as mainTimetableViewmodel from '../viewmodels/mainTimetableViewmodel.js'
+import * as mainTimetableViewmodel from '../viewmodels/mainTimetableViewmodel.js';
+import TableRow from "@/components/TableRow.vue";
 
 export default {
+    name: "MainTimetable",
     data() {
         return {
-            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            times: ["8:00-8:45", "8:55-9:40", "10:00-10:45", "10:55-11:40", "11:50-12:35", "12:45-13:30", "13:40-14:25", "14:35-15:20", "15:30-16:15"]
+            days: [],
+            times: ["8:00 - 8:45", "8:55 - 9:40", "10:00 - 10:45", "10:55 - 11:40", "11:50 - 12:35", "12:45 - 13:30", "13:40 - 14:25", "14:35 - 15:20", "15:30 - 16:15"]
         }
     },
+    components: { TableRow },
     methods: {
         async getTimetable() {
-            const table = document.getElementById("timetable");
-            table.innerHTML += await mainTimetableViewmodel.GetTimetable();
-        }
+            this.days = await mainTimetableViewmodel.GetTimetable();
+        },
+        onEditClass(cell){
+            this.$emit('editClass', cell);
+        },
     },
-    mounted() {
-        console.log("mounted");
+    mounted() {        
         this.getTimetable();
     },
 }
 </script>
 
 <style>
-
 #timetable {
     width: 100%;
     border-collapse: collapse;
@@ -49,48 +52,12 @@ export default {
     border: 1px solid #ccc;
 }
 
+tbody {
+    text-align: center;
+}
+
 #timetable td {
     padding: 10px;
     border: 1px solid #ccc;
 }
-
-td:hover:not(:first-child):not(:empty) {
-  cursor: pointer;
-  background-color: white;
-}
-
-#timetable td>div {
-    margin-bottom: 5px;
-}
-
-.lesson-name {
-    font-weight: bold;
-}
-
-.lesson-classroom {
-    font-size: 0.8em;
-    color: #666;
-}
-
-.lesson-note {
-    display: none;
-    position: absolute;
-    background-color: yellow;
-    padding: 10px;
-    z-index: 1;
-}
-
-td:hover .lesson-note {
-    display: block;
-}
-
-td:first-child {
-  font-weight: bold;
-}
-
-tbody{
-    background-color: #d1ffe8; 
-    text-align: center;
-}
-
 </style>
