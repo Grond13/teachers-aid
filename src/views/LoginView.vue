@@ -1,6 +1,6 @@
 <template>
     <div class="formWrapper">
-        <h2>Log-in</h2>
+        <h2>Login</h2>
         <form @submit.prevent="submitForm()">
             <label for="email" class="form-label">Email: </label>
             <input v-model="email" type="email" :class="{ 'form-control': true, 'is-invalid': !emailIsValid }" id="email">
