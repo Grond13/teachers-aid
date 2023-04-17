@@ -7,7 +7,6 @@ const startTimes = ["08:00:00", "08:55:00", "10:00:00", "10:55:00", "11:50:00", 
 export async function GetTimetable() {
     const raw = await mainTimetableModel.GetTimetable();
     var classes = JSON.parse(raw);
-    //console.log(classes);
     var days = {
         Monday: getClasses(classes.filter(element => element['day'] == 'monday'), 'monday'),
         Tuesday: getClasses(classes.filter(element => element['day'] == 'tuesday'), 'tuesday'),
@@ -31,12 +30,12 @@ function getClasses(items, day) {
     const result = {};
     for (let i = 0; i < startTimes.length; i++) {
         const startTime = startTimes[i];
-        const item = items.find(item => item.start === startTime) || { };        
+        const item = items.find(item => item.start === startTime) || {};
         item.uuid = uuidv4();
-        if(item.day == null){
+        if (item.day == null) {
             item.day = day;
         }
-        if(item.start == null){
+        if (item.start == null) {
             item.start = startTime;
         }
         result[startTime] = item || null;
