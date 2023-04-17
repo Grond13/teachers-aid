@@ -50,7 +50,7 @@ export default {
         switchView() {
             this.$emit('switch-view', false);
         },
-
+        
     }
 }
 </script>
