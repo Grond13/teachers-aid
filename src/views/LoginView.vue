@@ -9,20 +9,23 @@
             <input v-model="password" type="password" :class="{ 'form-control': true, 'is-invalid': !passwordIsValid }"
                 id="password">
 
+            <div class="center" id="alert">
+                Invalid e-mail or password.
+            </div>
+
             <div class="center">
                 <input type="submit" value="Log in" class="btn btn-primary submitButton">
             </div>
             <div class="center">
                 <a href="#" @click="switchView()">Register</a>
             </div>
-
         </form>
 
     </div>
 </template>
 
 <script>
-import * as LoginViewModel from '../viewmodels/loginViewModel.js'
+import * as LoginViewModel from '../viewmodels/loginViewModel.js';
 
 export default {
     data() {
@@ -30,7 +33,7 @@ export default {
             email: '',
             password: '',
             emailIsValid: true,
-            passwordIsValid: true,
+            passwordIsValid: true
         }
     },
     methods: {
@@ -40,8 +43,9 @@ export default {
                 if (LoginViewModel.validatePassword(this.password)) {
                     LoginViewModel.login(this.email, this.password);
                 }
-                else
+                else {
                     this.passwordIsValid = false;
+                }
             }
             else {
                 this.emailIsValid = false;
@@ -50,11 +54,19 @@ export default {
         switchView() {
             this.$emit('switch-view', false);
         },
-        
+
     }
 }
 </script>
 
 <style scoped>
 @import '../assets/forms.css';
+@import 'https://fonts.googleapis.com/css?family=Quicksand';
+
+#alert {
+    color: red;
+    visibility: hidden;
+    font-family: Quicksand;
+    padding-top: 5px;
+}
 </style>
