@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">    
+  <div class="sidebar">
     <header class="sidebar-header">
       <h3 v-text="header"></h3>
       <h4>{{ subheader }}</h4>
@@ -111,7 +111,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 85%;
+  height: fit-content;
 }
 </style>
   
