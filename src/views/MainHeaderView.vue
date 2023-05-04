@@ -26,7 +26,7 @@ h1 {
 
 header {
     background-color: var(--bg-dark-green);
-    height: 15vh;
+    height: 10vh;
     padding: 10px 0;
 }
 </style>

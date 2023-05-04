@@ -1,4 +1,5 @@
 import router from "../router";
+import store from '../store';
 
 export async function login(email, password) {
   const data = {
@@ -11,10 +12,14 @@ export async function login(email, password) {
   xhr.setRequestHeader("Content-Type", "application/json");
 
   xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      if (xhr.responseText == true) {
+    if (xhr.readyState === 4 && xhr.status === 200) {      
+      if (xhr.responseText.substring(0, 5) != "ERROR") { //TODO: reverse - alert when token is coming - safer
+        const token = xhr.responseText;
+        store.commit('setToken', token); 
+        console.log(store.state.token); 
         router.push({ name: 'main' });
-      } else {
+      } else {        
+        console.log(xhr.responseText);
         errorAlert();
       }
     }

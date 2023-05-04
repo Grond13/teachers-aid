@@ -67,7 +67,7 @@ export default {
   background-color: #f0f0f0;
   z-index: 999;
   overflow-x: hidden;
-  padding-top: 7.5vh;
+  padding-top: 10vh;
 }
 
 .sidebar-header,
@@ -81,7 +81,7 @@ export default {
 
 .sidebar-header {
   top: 0;
-  height: 7.5vh;
+  height: 10vh;
   font-weight: bold;
   display: flex;
   align-items: center;
