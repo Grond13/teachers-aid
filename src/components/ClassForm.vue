@@ -80,8 +80,15 @@ export default {
     onCancelClicked() {
       this.$emit('closeSidebar');
     },
-    onSubmitClicked(){
-      // TODO
+    onSubmitClicked() {
+      const updatedLesson = {
+        ...this.lesson,
+        name: this.name,
+        classroom: this.classroom,
+        note: this.note
+      };
+
+      this.$emit("submit", updatedLesson);
     }
   }
 };

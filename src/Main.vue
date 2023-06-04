@@ -3,7 +3,7 @@
   <div class="wrapper">
     <main-timetable-view v-on:editClass="onEditClass"></main-timetable-view>
     <sidebar v-if="sideBarIsActive" :header="editedClass.name ? 'Edit class' : 'Add class'" @closeSidebar="onCloseSidebar">
-      <class-form :lesson="this.editedClass" @closeSidebar="onCloseSidebar"></class-form>
+      <class-form :lesson="this.editedClass" @closeSidebar="onCloseSidebar" @sidebar="onsubmit"></class-form>
     </sidebar>
   </div>
 </template>
@@ -14,6 +14,7 @@ import MainHeaderView from './views/MainHeaderView.vue';
 import MainTimetableView from './views/MainTimetableView.vue';
 import SideBar from './components/SideBar.vue';
 import ClassForm from './components/classForm.vue';
+import * as mainViewmodel from './viewmodels/mainTimetableViewmodel.js';
 
 export default defineComponent({
   name: 'Main',
@@ -22,6 +23,7 @@ export default defineComponent({
       timetableItems: [],
       sideBarIsActive: false,
       editedClass: null,
+      lessons: []
     }
   },
   methods: {
@@ -32,8 +34,18 @@ export default defineComponent({
     },
     onCloseSidebar(){
       this.sideBarIsActive = false;
+      console.log("close");
+    },
+    onSubmit(updatedClass){
+      this.sideBarIsActive = false;
+
+      this.mainTimetableViewmodel.updateClass(updatedClass);
     }
   },
+  mounted() {
+
+  },
+
   components: {
     'main-header-view': MainHeaderView,
     'main-timetable-view': MainTimetableView,
