@@ -23,7 +23,7 @@ export async function GetTimetable() {
         }
         rows.push({ day, classes });
     }
-    console.log(rows);
+    //console.log(rows);
     return rows;
 }
 

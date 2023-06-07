@@ -1,63 +1,66 @@
-<template>
+  <template>
     <table id="timetable">
-        <thead>
-            <tr>
-                <th>Day</th>
-                <th v-for="time in times">{{ time }}</th>
-            </tr>
-        </thead>
-        <tbody v-if="days.length">
-            <TableRow v-for="(day, index) in days" :key="index" :day="day['day']" :lessons="day['classes']" v-on:editClass="onEditClass" />
-        </tbody>
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th v-for="time in times">{{ time }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="days.length">
+        <TableRow v-for="(day, index) in days" :key="index" :day="day['day']" :lessons="day['classes']" v-on:cellClicked="onCellClicked" />
+      </tbody>
     </table>
-</template>
-<script>
-import * as mainTimetableViewmodel from '../viewmodels/mainTimetableViewmodel.js';
-import TableRow from "@/components/TableRow.vue";
-
-export default {
+  </template>
+  
+  <script>
+  import * as mainTimetableViewmodel from '../viewmodels/mainTimetableViewmodel.js';
+  import TableRow from "@/components/TableRow.vue";
+  
+  export default {
     name: "MainTimetable",
     data() {
-        return {
-            days: [],
-            times: ["8:00 - 8:45", "8:55 - 9:40", "10:00 - 10:45", "10:55 - 11:40", "11:50 - 12:35", "12:45 - 13:30", "13:40 - 14:25", "14:35 - 15:20", "15:30 - 16:15"]
-        }
+      return {
+        days: [],
+        times: ["8:00 - 8:45", "8:55 - 9:40", "10:00 - 10:45", "10:55 - 11:40", "11:50 - 12:35", "12:45 - 13:30", "13:40 - 14:25", "14:35 - 15:20", "15:30 - 16:15"],
+        selectedCell: null
+      };
     },
     components: { TableRow },
     methods: {
-        async getTimetable() {
-            this.days = await mainTimetableViewmodel.GetTimetable();
-        },
-        onEditClass(cell){
-            this.$emit('editClass', cell);
-        },
+      async getTimetable() {
+        this.days = await mainTimetableViewmodel.GetTimetable();
+      },
+      onCellClicked(cell) {
+        this.$emit("editClass", cell);
+      },
     },
-    mounted() {        
-        this.getTimetable();
+    mounted() {
+      this.getTimetable();
     },
-}
-</script>
-
-<style>
-#timetable {
+  };
+  </script>
+  
+  <style>
+  #timetable {
     width: 100%;
     border-collapse: collapse;
-}
-
-#timetable th {
+  }
+  
+  #timetable th {
     background-color: #eee;
     font-weight: bold;
     text-align: center;
     padding: 10px;
     border: 1px solid #ccc;
-}
-
-tbody {
+  }
+  
+  tbody {
     text-align: center;
-}
-
-#timetable td {
+  }
+  
+  #timetable td {
     padding: 10px;
     border: 1px solid #ccc;
-}
-</style>
+  }
+  </style>
+  

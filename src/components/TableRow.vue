@@ -5,7 +5,7 @@
             v-on:click="onCellClicked(lesson)">
             <div v-if="lesson.name" class="lesson-name"> {{ lesson.name }}</div>
             <div v-if="lesson.classroom" class="lesson-classroom">{{ lesson.classroom }}</div>
-            <div v-if="lesson.note !== null && lesson.note" class="lesson-note" v-bind:title="lesson.note"></div>
+            <div v-if="lesson.note !== null && lesson.note" class="lesson-note">{{ lesson.note }}</div>
             <button v-if="!lesson.name" class="plusButton">
                 <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         onCellClicked(cell) {
-            this.$emit('editClass', cell);
+            this.$emit('cellClicked', cell);
         }
     },
     components: {

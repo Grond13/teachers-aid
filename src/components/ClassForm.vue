@@ -26,7 +26,6 @@
     <label for="inputClassroom">
       Classroom:
       <input type="text" name="classroom" id="inputClassroom" v-model="classroom">
-      <!--TODO: Change to select + make a request to database for values-->
     </label>
 
     <label for="inputNote">
@@ -77,18 +76,11 @@ export default {
     },
   },
   methods: {
-    onCancelClicked() {
+    onCancelClicked() {            
       this.$emit('closeSidebar');
     },
-    onSubmitClicked() {
-      const updatedLesson = {
-        ...this.lesson,
-        name: this.name,
-        classroom: this.classroom,
-        note: this.note
-      };
-
-      this.$emit("submit", updatedLesson);
+    onSubmitClicked() {            
+      this.$emit("submit");
     }
   }
 };
