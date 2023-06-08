@@ -18,16 +18,25 @@
     <div class="uneditableContent">
       {{ this.lesson.end }}
     </div>
-    <label for="inputName">
-      Title:
-      <input type="text" name="name" id="inputName" v-model="name">
+        
+    <label for="selectLessons">
+      Lesson:
+      <select name="lessonNames" id="selectLessons" v-model="lesson.idLesson">        
+        <option v-for="lessonName in LessonNames" :value="lessonName.idLesson" :key="lessonName.idLesson">
+          {{ lessonName.name }}
+        </option>
+      </select>
     </label>
 
-    <label for="inputClassroom">
+    <label for="selectClassrooms">
       Classroom:
-      <input type="text" name="classroom" id="inputClassroom" v-model="classroom">
+      <select name="classroomNames" id="selectClassroom" v-model="lesson.idClassroom">        
+        <option v-for="classroomName in ClassroomNames" :value="classroomName.idClassroom" :key="classroomName.idClassroom">
+          {{ classroomName.name }}
+        </option>
+      </select>
     </label>
-
+   
     <label for="inputNote">
       Note:
       <textarea name="note" id="inputNote" cols="30" rows="4" v-model="note"></textarea>
@@ -35,8 +44,9 @@
 
     <div class="buttonBox">
       <button class="cancel" @click.prevent="onCancelClicked()">Cancel</button>
-      <button class="submit" @click.prevent="onSubmitClicked()">Submit</button>
+      <button class="submit" @click.prevent="onSubmitClicked()">Submit</button>            
     </div>
+    <button class="delete" @click.prevent="onDeleteClicked()" v-if="lesson.idLesson">Delete</button>
   </form>
 </template>
   
@@ -48,9 +58,15 @@ export default {
       type: Object,
       required: true,
     },
+    LessonNames:{
+      type: Array,      
+    },
+    ClassroomNames:{
+      type: Array,      
+    },
   },
   computed: {
-    name: {
+    selectedName: {
       get() {
         return this.lesson.name || "";
       },
@@ -58,7 +74,7 @@ export default {
         this.$emit("update:lesson", { ...this.lesson, name: value });
       },
     },
-    classroom: {
+    selectedClassroom: {
       get() {
         return this.lesson.classroom || "";
       },
@@ -79,8 +95,12 @@ export default {
     onCancelClicked() {            
       this.$emit('closeSidebar');
     },
-    onSubmitClicked() {            
+    onSubmitClicked() {     
+      // TODO: Check if all the necessary info is filled out        
       this.$emit("submit");
+    },
+    onDeleteClicked() {              
+      this.$emit("delete");
     }
   }
 };
@@ -140,10 +160,10 @@ textarea:focus {
 .buttonBox {
   display: flex;
   justify-content: space-between;
+  margin: 0 0 30px;
 }
 
-button.cancel,
-button.submit {
+button {
   width: 40%;
   min-width: fit-content;
   border: 2px solid;
@@ -152,6 +172,12 @@ button.submit {
   padding: 8px 12px;
   font-size: 1rem;
   font-weight: bold;
+}
+
+button.delete{
+  color: white;
+  border-color: var(--cancel-red);
+  background-color: var(--cancel-red);
 }
 
 button.cancel {

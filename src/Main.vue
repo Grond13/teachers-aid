@@ -13,9 +13,12 @@
     >
       <class-form
         :lesson="this.editedClass"
+        :LessonNames = "this.lessons"
+        :ClassroomNames = "this.classrooms"
         @closeSidebar="onCloseSidebar"
         @submit="onSubmit"
         @update:lesson="onUpdateLesson"
+        @delete="onDelete"
       ></class-form>
     </sidebar>
   </div>
@@ -37,13 +40,15 @@ export default defineComponent({
       sideBarIsActive: false,
       editedClass: null,
       editedClassCopy: null,
-      lessons: []
+      lessons: [],
+      classrooms: [],
     };
   },
   methods: {
     onEditClass(cell) {
       this.editedClass = cell;
       this.editedClassCopy = { ...cell };
+      console.log(this.editedClass);
       this.sideBarIsActive = true;
     },
     onCloseSidebar() {
@@ -51,7 +56,7 @@ export default defineComponent({
       this.editedClass = this.editedClassCopy;
     },
     async onSubmit() {
-      console.log(this.editedClass);
+      //console.log(this.editedClass);
       this.sideBarIsActive = false;
       if (await mainViewModel.submitClass(this.editedClass)) {
         this.$refs.mainTimetableView.getTimetable();
@@ -60,10 +65,18 @@ export default defineComponent({
     },
     onUpdateLesson(updatedLesson) {
       this.editedClass = updatedLesson;
-    }
+    },
+    async onDelete(){
+      this.sideBarIsActive = false;
+      if (await mainViewModel.deleteClass(this.editedClass)) {
+        this.$refs.mainTimetableView.getTimetable();
+      }
+      else console.log("ERROR");
+    },
   },
-  mounted() {
-    
+  async mounted() {        
+    this.lessons = await mainViewModel.getLessonNames();
+    this.classrooms = await mainViewModel.getClassroomNames();        
   },
   components: {
     'main-header-view': MainHeaderView,

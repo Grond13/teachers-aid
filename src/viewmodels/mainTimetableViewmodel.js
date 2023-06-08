@@ -39,6 +39,16 @@ function getClasses(items, day) {
         if(item.start == null){
             item.start = startTime;
         }
+        if (item.end == null) {     
+            const startDatetime = new Date();
+            const [hours, minutes, seconds] = startTime.split(':');
+            startDatetime.setHours(hours);
+            startDatetime.setMinutes(minutes);
+            startDatetime.setSeconds(seconds);
+            const endDatetime = new Date(startDatetime.getTime() + 45 * 60000);
+            item.end = endDatetime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });            
+        }
+        
         result[startTime] = item || null;
     }
     return result;
