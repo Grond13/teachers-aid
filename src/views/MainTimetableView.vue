@@ -7,7 +7,7 @@
         </tr>
       </thead>
       <tbody v-if="days.length">
-        <TableRow v-for="(day, index) in days" :key="index" :day="day['day']" :lessons="day['classes']" v-on:cellClicked="onCellClicked" />
+        <TableRow v-for="(day, index) in days" :key="index" v-bind:day="day['day']" :lessons="day['classes']" v-on:cellClicked="onCellClicked" />
       </tbody>
     </table>
   </template>

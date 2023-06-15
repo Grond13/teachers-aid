@@ -15,7 +15,12 @@ const router = createRouter({
       path: '/main',
       name: 'main',
       component: () => import(/* webpackChunkName: "main" */ '../Main.vue')
-    }
+    },
+    {
+      path: '/classroom',
+      name: 'classroom',
+      component: () => import(/* webpackChunkName: "ClassRoomDesigner" */ '../views/ClassroomDesigner.vue')
+    },
   ]
 });
 

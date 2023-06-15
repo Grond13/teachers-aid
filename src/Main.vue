@@ -21,6 +21,9 @@
         @delete="onDelete"
       ></class-form>
     </sidebar>
+    <div>
+    <button class="navigate" @click.prevent="onNewClassroomClicked()">New Classroom</button>        
+  </div>
   </div>
 </template>
 
@@ -31,6 +34,7 @@ import MainTimetableView from './views/MainTimetableView.vue';
 import SideBar from './components/SideBar.vue';
 import ClassForm from './components/ClassForm.vue';
 import * as mainViewModel from './viewmodels/mainViewModel.js';
+import router from "./router";
 
 export default defineComponent({
   name: 'Main',
@@ -73,6 +77,9 @@ export default defineComponent({
       }
       else console.log("ERROR");
     },
+    onNewClassroomClicked(){
+      router.push({name: 'classroom'});
+    },
   },
   async mounted() {        
     this.lessons = await mainViewModel.getLessonNames();
@@ -87,4 +94,25 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style scoped>
+button.navigate {
+  width: 150px;
+  min-width: fit-content;
+  border: 2px solid;
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 30px 0; 
+}
+
+div.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh; 
+}
+
+</style>
