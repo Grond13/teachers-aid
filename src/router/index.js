@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Initial from '../components/Initial.vue';
-import Main from '../Main.vue';
+import Main from '../components/Main.vue';
 //import { navigateToMain } from './routerFunctions.js';
 
 const router = createRouter({
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/main',
       name: 'main',
-      component: () => import(/* webpackChunkName: "main" */ '../Main.vue')
+      component: () => import(/* webpackChunkName: "main" */ '../components/Main.vue')
     },
     {
       path: '/classroom',

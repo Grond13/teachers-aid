@@ -29,12 +29,12 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import MainHeader from './components/MainHeader.vue';
-import MainTimetableView from './components/MainTimetable.vue';
-import SideBar from './subcomponents/SideBar.vue';
-import ClassForm from './subcomponents/ClassForm.vue';
-import * as mainLogic from './logic/mainLogic.js';
-import router from "./router";
+import MainHeader from './MainHeader.vue';
+import MainTimetableView from './MainTimetable.vue';
+import SideBar from '../subcomponents/SideBar.vue';
+import ClassForm from '../subcomponents/ClassForm.vue';
+import * as mainLogic from '../logic/mainLogic.js';
+import router from "../router";
 
 export default defineComponent({
   name: 'Main',
