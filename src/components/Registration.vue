@@ -29,8 +29,7 @@
 
             <label for="password2" class="form-label">Password again: </label>
             <input v-model="password2" type="password"
-                :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password2"
-                required>
+                :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password2" required>
             <div v-if="!passwordIsValid" id="passwordInvalidError" class="invalid-feedback">
                 Password has to be at least 7 characters long.
             </div>

@@ -1,8 +1,8 @@
 <template>
     <div>
-      <main-header-view></main-header-view>  
+      <main-header></main-header>  
       <div class="graphicWrapper">
-        <classroom-view ref="ClassroomDisplay" v-if="ViewIsVisible" :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="true"></classroom-view>
+        <classroom-display ref="ClassroomDisplay" v-if="ViewIsVisible" :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="true"></classroom-display>
         <sidebar v-if="sideBarIsActive" :header="'Classroom Specifications'" @closeSidebar="onCloseSidebar">
           <classroom-specifications-form :classroomSpecifications="ClassroomSpecifications" @closeSidebar="onCloseSidebar" @submitSpecifications="onSubmitSpecifications"></classroom-specifications-form>
         </sidebar>        
@@ -25,10 +25,10 @@
   export default defineComponent({
     name: 'ClassroomDesigner',
     components: {
-      'main-header-view': MainHeader,
+      'main-header': MainHeader,
       'sidebar': SideBar,
       'classroom-specifications-form': ClassroomSpecificationsForm,
-      'classroom-view': ClassroomDisplay,
+      'classroom-display': ClassroomDisplay,
       FontAwesomeIcon
     },
     data() {

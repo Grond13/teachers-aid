@@ -1,18 +1,18 @@
 <template>
-    <initial-header-view></initial-header-view>
+    <initial-header></initial-header>
 
     <div class="wrapper">
-        <login-view v-if="loginActive" v-on:switch-view="onSwitchView"></login-view>
-        <registration-view v-else v-on:switch-view="onSwitchView"></registration-view>
+        <login v-if="loginActive" v-on:switch-view="onSwitchView"></login>
+        <registration v-else v-on:switch-view="onSwitchView"></registration>
     </div>
 </template>
   
   
 <script>
 import { defineComponent } from 'vue';
-import initialHeaderView from './initialHeader.vue';
+import initialHeader from './initialHeader.vue';
 import Login from './Login.vue';
-import RegistrationView from './Registration.vue';
+import Registration from './Registration.vue';
 
 export default defineComponent({
     name: "Initial",
@@ -24,12 +24,13 @@ export default defineComponent({
     methods: {
         onSwitchView(value) {
             this.loginActive = value;
+            console.log(this.loginActive);
         },        
     },
     components: {
-        'initial-header-view': initialHeaderView,
-        'login-view': Login,
-        'registration-view': RegistrationView,
+        'initial-header': initialHeader,
+        'login': Login,
+        'registration': Registration,
     },    
 })
 

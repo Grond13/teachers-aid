@@ -1,11 +1,11 @@
 <template>
-  <main-header-view></main-header-view>
+  <main-header></main-header>
   <div class="wrapper">
-    <main-timetable-view
-      ref="mainTimetableView"
+    <main-timetable
+      ref="MainTimetable"
       v-on:editClass="onEditClass"
       :selectedCell="editedClass"
-    ></main-timetable-view>
+    ></main-timetable>
     <sidebar
       v-if="sideBarIsActive"
       :header="editedClass.name ? 'Edit class' : 'Add class'"
@@ -30,7 +30,7 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import MainHeader from './MainHeader.vue';
-import MainTimetableView from './MainTimetable.vue';
+import MainTimetable from './MainTimetable.vue';
 import SideBar from '../subcomponents/SideBar.vue';
 import ClassForm from '../subcomponents/ClassForm.vue';
 import * as mainLogic from '../logic/mainLogic.js';
@@ -63,7 +63,7 @@ export default defineComponent({
       //console.log(this.editedClass);
       this.sideBarIsActive = false;
       if (await mainLogic.submitClass(this.editedClass)) {
-        this.$refs.mainTimetableView.getTimetable();
+        this.$refs.MainTimetable.getTimetable();
       }
       else console.log("ERROR");
     },
@@ -73,7 +73,7 @@ export default defineComponent({
     async onDelete(){
       this.sideBarIsActive = false;
       if (await mainLogic.deleteClass(this.editedClass)) {
-        this.$refs.mainTimetableView.getTimetable();
+        this.$refs.MainTimetable.getTimetable();
       }
       else console.log("ERROR");
     },
@@ -86,8 +86,8 @@ export default defineComponent({
     this.classrooms = await mainLogic.getClassroomNames();        
   },
   components: {
-    'main-header-view': MainHeader,
-    'main-timetable-view': MainTimetableView,
+    'main-header': MainHeader,
+    'main-timetable': MainTimetable,
     sidebar: SideBar,
     'class-form': ClassForm
   }
