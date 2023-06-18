@@ -2,7 +2,7 @@
     <div>
       <main-header-view></main-header-view>  
       <div class="graphicWrapper">
-        <classroom-view v-if="ViewIsVisible" :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="true"></classroom-view>
+        <classroom-view ref="classroomView" v-if="ViewIsVisible" :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="true"></classroom-view>
         <sidebar v-if="sideBarIsActive" :header="'Classroom Specifications'" @closeSidebar="onCloseSidebar">
           <classroom-specifications-form :classroomSpecifications="ClassroomSpecifications" @closeSidebar="onCloseSidebar" @submitSpecifications="onSubmitSpecifications"></classroom-specifications-form>
         </sidebar>        
@@ -53,8 +53,12 @@
       },
       onSubmitSpecifications(newSpecs) {
         this.ClassroomSpecifications = newSpecs;
+        console.log(this.ClassroomSpecifications);
         this.sideBarIsActive = false;
-        this.ViewIsVisible = true;
+        if(this.ViewIsVisible)
+          this.$refs.classroomView.getDesks();
+        else
+          this.ViewIsVisible = true;        
       },
       onConfirm(){
         

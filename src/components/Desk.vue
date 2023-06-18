@@ -30,8 +30,8 @@ export default {
     'student-card': StudentCard
   },
   mounted() {
-    console.log(this.cards);
-    console.log(this.cardHeight, this.cardWidth);
+    //console.log(this.cards);
+    //console.log(this.cardHeight, this.cardWidth);
   }
 };
 </script>

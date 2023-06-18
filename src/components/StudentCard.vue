@@ -46,6 +46,7 @@ export default {
                 card.style.height = this.cardHeight + 'px';
                 card.style.width = this.cardWidth + 'px';
             }
+            
         }
     },
     components: {

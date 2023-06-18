@@ -1,9 +1,8 @@
 <template>
-    <table id="classroom">
-        <tbody>
+    <table>
+        <tbody class="desksTableBody">
             <tr v-for="(row, rowIndex) in Desks" :key="rowIndex">
-                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskId" :cards="Desks[rowIndex][deskIndex]"
-                    :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" />
+                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskId" :cards="Desks[rowIndex][deskIndex]" :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" />
             </tr>
         </tbody>
     </table>
@@ -39,6 +38,9 @@ export default {
             else
                 this.Desks = ClassroomViewModel.GetEmptyDesks(this.ClassroomSpecifications);
             //console.log(this.Desks);
+
+            this.cardHeight = this.calculateHeight(this.ClassroomSpecifications.rows, this.ClassroomSpecifications.columns);
+            this.cardWidth = this.calculateWidth(this.ClassroomSpecifications.columns);
         },
         calculateHeight(rowCount, columnCount) {
             return ClassroomViewModel.CalculateHeight(rowCount, columnCount);
@@ -49,23 +51,20 @@ export default {
     },
     mounted() {
         this.getDesks();
-        this.cardHeight = this.calculateHeight(this.ClassroomSpecifications.rows, this.ClassroomSpecifications.columns);
-        this.cardWidth = this.calculateWidth(this.ClassroomSpecifications.columns);            
     },
-
 };
 </script>
   
-<style>
+<style scoped>
 tbody {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-tr {
+tr{
     display: flex;
-    justify-content: space-around;    
+    justify-content: space-around;
     padding: 0 10px;
     width: 100vw;
     margin-top: 5px;
