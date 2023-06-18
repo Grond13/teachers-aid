@@ -14,7 +14,7 @@
   
   <script>
   import * as mainTimetableLogic from '../logic/mainTimetableLogic.js';
-  import TableRow from "@/components/TableRow.vue";
+  import TableRow from "@/subcomponents/TableRow.vue";
   
   export default {
     name: "MainTimetable",

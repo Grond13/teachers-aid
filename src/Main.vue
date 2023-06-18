@@ -29,10 +29,10 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import MainHeaderView from './views/MainHeaderView.vue';
-import MainTimetableView from './views/MainTimetableView.vue';
-import SideBar from './components/SideBar.vue';
-import ClassForm from './components/ClassForm.vue';
+import MainHeader from './components/MainHeader.vue';
+import MainTimetableView from './components/MainTimetable.vue';
+import SideBar from './subcomponents/SideBar.vue';
+import ClassForm from './subcomponents/ClassForm.vue';
 import * as mainLogic from './logic/mainLogic.js';
 import router from "./router";
 
@@ -86,7 +86,7 @@ export default defineComponent({
     this.classrooms = await mainLogic.getClassroomNames();        
   },
   components: {
-    'main-header-view': MainHeaderView,
+    'main-header-view': MainHeader,
     'main-timetable-view': MainTimetableView,
     sidebar: SideBar,
     'class-form': ClassForm

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Initial from '../views/InitialView.vue';
+import Initial from '../components/Initial.vue';
 import Main from '../Main.vue';
 //import { navigateToMain } from './routerFunctions.js';
 
@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'initial',
-      component: () => import(/* webpackChunkName: "initial" */ '../views/InitialView.vue')
+      component: () => import(/* webpackChunkName: "initial" */ '../components/Initial.vue')
     },
     {
       path: '/main',
@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/classroom',
       name: 'classroom',
-      component: () => import(/* webpackChunkName: "ClassRoomDesigner" */ '../views/ClassroomDesigner.vue')
+      component: () => import(/* webpackChunkName: "ClassRoomDesigner" */ '../components/ClassroomDesigner.vue')
     },
   ]
 });

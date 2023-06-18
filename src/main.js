@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import Initial from './views/InitialView.vue' 
+import Initial from './components/Initial.vue' 
 import Main from './Main.vue' 
 import App from './App.vue'
 import router from './router'

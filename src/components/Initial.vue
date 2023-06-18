@@ -10,9 +10,9 @@
   
 <script>
 import { defineComponent } from 'vue';
-import initialHeaderView from './initialHeaderView.vue';
-import LoginView from './LoginView.vue';
-import RegistrationView from './RegistrationView.vue';
+import initialHeaderView from './initialHeader.vue';
+import Login from './Login.vue';
+import RegistrationView from './Registration.vue';
 
 export default defineComponent({
     name: "Initial",
@@ -28,7 +28,7 @@ export default defineComponent({
     },
     components: {
         'initial-header-view': initialHeaderView,
-        'login-view': LoginView,
+        'login-view': Login,
         'registration-view': RegistrationView,
     },    
 })

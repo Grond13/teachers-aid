@@ -2,7 +2,7 @@
     <div>
       <main-header-view></main-header-view>  
       <div class="graphicWrapper">
-        <classroom-view ref="classroomView" v-if="ViewIsVisible" :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="true"></classroom-view>
+        <classroom-view ref="ClassroomDisplay" v-if="ViewIsVisible" :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="true"></classroom-view>
         <sidebar v-if="sideBarIsActive" :header="'Classroom Specifications'" @closeSidebar="onCloseSidebar">
           <classroom-specifications-form :classroomSpecifications="ClassroomSpecifications" @closeSidebar="onCloseSidebar" @submitSpecifications="onSubmitSpecifications"></classroom-specifications-form>
         </sidebar>        
@@ -15,20 +15,20 @@
   
   <script>
   import { defineComponent } from 'vue';
-  import MainHeaderView from './MainHeaderView.vue';
-  import SideBar from '../components/SideBar.vue';
-  import ClassroomSpecificationsForm from '../components/ClassroomSpecificationsForm.vue';
-  import ClassroomView from './ClassroomView.vue';
+  import MainHeader from './MainHeader.vue';
+  import SideBar from '../subcomponents/SideBar.vue';
+  import ClassroomSpecificationsForm from '../subcomponents/ClassroomSpecificationsForm.vue';
+  import ClassroomDisplay from './ClassroomDisplay.vue';
   import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   
   export default defineComponent({
     name: 'ClassroomDesigner',
     components: {
-      'main-header-view': MainHeaderView,
+      'main-header-view': MainHeader,
       'sidebar': SideBar,
       'classroom-specifications-form': ClassroomSpecificationsForm,
-      'classroom-view': ClassroomView,
+      'classroom-view': ClassroomDisplay,
       FontAwesomeIcon
     },
     data() {
@@ -56,7 +56,7 @@
         console.log(this.ClassroomSpecifications);
         this.sideBarIsActive = false;
         if(this.ViewIsVisible)
-          this.$refs.classroomView.getDesks();
+          this.$refs.ClassroomDisplay.getDesks();
         else
           this.ViewIsVisible = true;        
       },

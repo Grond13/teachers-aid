@@ -10,10 +10,10 @@
   
 <script>
 import * as classroomLogic from '../logic/classroomLogic.js';
-import Desk from "@/components/Desk.vue";
+import Desk from "@/subcomponents/Desk.vue";
 
 export default {
-    name: "ClassroomView",
+    name: "ClassroomDisplay",
     data() {
         return {
             Desks: [],
