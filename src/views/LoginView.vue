@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import * as LoginViewModel from '../viewmodels/loginViewModel.js';
+import * as loginLogic from '../logic/loginLogic.js';
 
 export default {
     data() {
@@ -38,10 +38,10 @@ export default {
     },
     methods: {
         submitForm() {
-            if (LoginViewModel.validateEmail(this.email)) {
+            if (loginLogic.validateEmail(this.email)) {
                 this.emailIsValid = true;
-                if (LoginViewModel.validatePassword(this.password)) {
-                    LoginViewModel.login(this.email, this.password);
+                if (loginLogic.validatePassword(this.password)) {
+                    loginLogic.login(this.email, this.password);
                 }
                 else {
                     this.passwordIsValid = false;

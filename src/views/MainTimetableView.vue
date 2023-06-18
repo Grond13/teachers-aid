@@ -13,7 +13,7 @@
   </template>
   
   <script>
-  import * as mainTimetableViewmodel from '../viewmodels/mainTimetableViewmodel.js';
+  import * as mainTimetableLogic from '../logic/mainTimetableLogic.js';
   import TableRow from "@/components/TableRow.vue";
   
   export default {
@@ -28,7 +28,7 @@
     components: { TableRow },
     methods: {
       async getTimetable() {
-        this.days = await mainTimetableViewmodel.GetTimetable();
+        this.days = await mainTimetableLogic.GetTimetable();
       },
       onCellClicked(cell) {
         this.$emit("editClass", cell);

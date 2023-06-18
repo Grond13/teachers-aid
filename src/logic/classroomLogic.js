@@ -1,4 +1,4 @@
-import * as ClassroomModel from '../models/classroomModel.js';
+import * as ClassroomConnection from '../connection/classroomConnection.js';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -64,7 +64,7 @@ export function CalculateWidth(columnCount) {
 
 export async function InsertClassroom(classroomSpecs) {
     if (classroomSpecs.name && classroomSpecs.rows && classroomSpecs.columns && classroomSpecs.deskSize) {
-        ClassroomModel.InsertClassroom(classroomSpecs);
+        ClassroomConnection.InsertClassroom(classroomSpecs);
     }
     else return "ERROR: Missing specifications."
 }

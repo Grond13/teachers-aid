@@ -1,10 +1,10 @@
-import * as mainTimetableModel from '../models/mainTimetableModel.js';
+import * as mainTimetableConnection from '../connection/mainTimetableConnection.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const startTimes = ["08:00:00", "08:55:00", "10:00:00", "10:55:00", "11:50:00", "12:45:00", "13:40:00", "14:35:00", "15:30:00"];
 
 export async function GetTimetable() {
-    const raw = await mainTimetableModel.GetTimetable();
+    const raw = await mainTimetableConnection.GetTimetable();
     
     var classes = JSON.parse(raw);
     //console.log(raw);
@@ -55,5 +55,5 @@ function getClasses(items, day) {
 }
 
 function updateClass(updatedClass){
-    this.mainTimetableModel.updateClass(updatedClass);
+    this.mainTimetableConnection.updateClass(updatedClass);
 }

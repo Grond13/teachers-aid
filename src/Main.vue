@@ -33,7 +33,7 @@ import MainHeaderView from './views/MainHeaderView.vue';
 import MainTimetableView from './views/MainTimetableView.vue';
 import SideBar from './components/SideBar.vue';
 import ClassForm from './components/ClassForm.vue';
-import * as mainViewModel from './viewmodels/mainViewModel.js';
+import * as mainLogic from './logic/mainLogic.js';
 import router from "./router";
 
 export default defineComponent({
@@ -62,7 +62,7 @@ export default defineComponent({
     async onSubmit() {
       //console.log(this.editedClass);
       this.sideBarIsActive = false;
-      if (await mainViewModel.submitClass(this.editedClass)) {
+      if (await mainLogic.submitClass(this.editedClass)) {
         this.$refs.mainTimetableView.getTimetable();
       }
       else console.log("ERROR");
@@ -72,7 +72,7 @@ export default defineComponent({
     },
     async onDelete(){
       this.sideBarIsActive = false;
-      if (await mainViewModel.deleteClass(this.editedClass)) {
+      if (await mainLogic.deleteClass(this.editedClass)) {
         this.$refs.mainTimetableView.getTimetable();
       }
       else console.log("ERROR");
@@ -82,8 +82,8 @@ export default defineComponent({
     },
   },
   async mounted() {        
-    this.lessons = await mainViewModel.getLessonNames();
-    this.classrooms = await mainViewModel.getClassroomNames();        
+    this.lessons = await mainLogic.getLessonNames();
+    this.classrooms = await mainLogic.getClassroomNames();        
   },
   components: {
     'main-header-view': MainHeaderView,

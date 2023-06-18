@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import * as RegistrationViewModel from '../viewmodels/registrationViewModel.js'
+import * as RegistrationLogic from '../logic/registrationLogic.js'
 
 export default {
     data() {
@@ -68,25 +68,25 @@ export default {
     },
     methods: {
         submitForm() { //TODO: Idea: automate checking on change in the input? 
-            if (!RegistrationViewModel.validateName(this.name)) {
+            if (!RegistrationLogic.validateName(this.name)) {
                 this.nameIsValid = false;
                 return;
             }
             else this.nameIsValid = true;
 
-            if (!RegistrationViewModel.validateName(this.surname)) {
+            if (!RegistrationLogic.validateName(this.surname)) {
                 this.surnameIsValid = false;
                 return;
             }
             else this.surnameIsValid = true;
 
-            if (!RegistrationViewModel.validateEmail(this.email)) {
+            if (!RegistrationLogic.validateEmail(this.email)) {
                 this.emailIsValid = false;
                 return;
             }
             else this.emailIsValid = true;
 
-            var pwCheck = RegistrationViewModel.validatePasswords(this.password, this.password2);
+            var pwCheck = RegistrationLogic.validatePasswords(this.password, this.password2);
             if (!pwCheck.match) {
                 this.passwordsMatch = false;
                 console.log("passwords do not match");
@@ -101,7 +101,7 @@ export default {
             }
             else this.passwordIsValid = true;
 
-            RegistrationViewModel.register(this.name, this.surname, this.email, this.password);
+            RegistrationLogic.register(this.name, this.surname, this.email, this.password);
             this.switchView();
         },
         switchView() {

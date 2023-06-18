@@ -1,8 +1,8 @@
-import * as loginModel from '../models/loginModel.js';
+import * as loginConnection from '../connection/loginConnection.js';
 import { checkEmail, checkPassword } from '../assets/functions.js';
 
 export function login(email, password) {
-    loginModel.login(email, password);
+    loginConnection.login(email, password);
 }
 
 export function validateEmail(email) {

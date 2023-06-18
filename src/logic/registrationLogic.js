@@ -1,8 +1,8 @@
-import * as registrationModel from '../models/registrationModel.js';
+import * as registrationConnection from '../connection/registrationConnection.js';
 import { checkEmail, checkPassword } from '../assets/functions.js';
 
 export function register(name, surname, email, password){
-    registrationModel.register(name, surname, email, password);
+    registrationConnection.register(name, surname, email, password);
 }
 
 export function validateName(name){

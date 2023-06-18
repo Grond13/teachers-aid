@@ -9,7 +9,7 @@
 </template>
   
 <script>
-import * as ClassroomViewModel from '../viewmodels/classroomViewModel.js';
+import * as classroomLogic from '../logic/classroomLogic.js';
 import Desk from "@/components/Desk.vue";
 
 export default {
@@ -34,19 +34,19 @@ export default {
     methods: {
         async getDesks() {
             if (!this.DatabaseLoadDisabled)
-                this.Desks = await ClassroomViewModel.getDesks();
+                this.Desks = await classroomLogic.getDesks();
             else
-                this.Desks = ClassroomViewModel.GetEmptyDesks(this.ClassroomSpecifications);
+                this.Desks = classroomLogic.GetEmptyDesks(this.ClassroomSpecifications);
             //console.log(this.Desks);
 
             this.cardHeight = this.calculateHeight(this.ClassroomSpecifications.rows, this.ClassroomSpecifications.columns);
             this.cardWidth = this.calculateWidth(this.ClassroomSpecifications.columns);
         },
         calculateHeight(rowCount, columnCount) {
-            return ClassroomViewModel.CalculateHeight(rowCount, columnCount);
+            return classroomLogic.CalculateHeight(rowCount, columnCount);
         },
         calculateWidth(columnCount) {
-            return ClassroomViewModel.CalculateWidth(columnCount);
+            return classroomLogic.CalculateWidth(columnCount);
         },
     },
     mounted() {
