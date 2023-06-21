@@ -36,10 +36,6 @@ export default {
       type: String,
       required: false
     },
-    payload: {
-      type: Object,
-      required: false
-    }
   },
   data() {
     return {

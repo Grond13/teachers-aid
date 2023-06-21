@@ -1,7 +1,7 @@
 <template>
     <tr>
         <td>{{ day }}</td>
-        <td v-for="lesson in lessons" :key="lesson.uuid" :class="lesson.name ? 'non-empty' : 'empty'"
+        <td v-for="lesson in lessons" :key="lesson.uuid" v-bind:class="lesson.name ? 'non-empty' : 'empty'"
             v-on:click="onCellClicked(lesson)">
             <div v-if="lesson.name" class="lesson-name"> {{ lesson.name }}</div>
             <div v-if="lesson.classroom" class="lesson-classroom">{{ lesson.classroom }}</div>
@@ -31,8 +31,6 @@ export default {
             required: true,
         },
     },
-    mounted() {
-    },
     methods: {
         onCellClicked(cell) {
             this.$emit('cellClicked', cell);
@@ -55,7 +53,7 @@ td.empty {
 }
 
 td.non-empty {
-    background-color: #b6fcd9;    
+    background-color: #b6fcd9;
 }
 
 td.non-empty:hover {
@@ -99,10 +97,11 @@ td:first-child {
     font-size: 20px;
 }
 
-td.empty:hover > .plusButton {
-    opacity: 1;      
+td.empty:hover>.plusButton {
+    opacity: 1;
 }
-td.empty:hover{
+
+td.empty:hover {
     cursor: pointer;
 }
 </style>
