@@ -4,9 +4,9 @@ import * as teachingSessionConnection from '../connection/teachingSessionConnect
 export async function getTeachingSession() {
     const raw = await mainTimetableConnection.GetTimetable();
     
-    var deskRows = JSON.parse(raw);
-    console.log(deskRows);
-    
+    var deskRows = JSON.parse(raw);        
+    console.log(deskRows);        
+
     return rows;
 }
 

@@ -3,8 +3,9 @@
         <main-header></main-header>
         <div class="graphicWrapper">
             <classroom-display ref="ClassroomDisplay" v-if="ViewIsVisible"
-                :ClassroomSpecifications="ClassroomSpecifications" :DatabaseLoadDisabled="false"></classroom-display>
-            <sidebar v-if="sideBarIsActive" :header="'Classroom Specifications'" @closeSidebar="onCloseSidebar">
+                 :DatabaseLoadDisabled="false" @studentSelected="onStudentSelected"></classroom-display>
+            <sidebar v-if="sideBarIsActive" :header="this.selectedStudentInfo.surname + ' ' + this.selectedStudentInfo.name" @closeSidebar="onCloseSidebar">
+                <student-detail :studentInfo="this.selectedStudentInfo"></student-detail>
             </sidebar>
         </div>
     </div>
@@ -15,30 +16,30 @@ import { defineComponent } from 'vue';
 import MainHeader from './MainHeader.vue';
 import SideBar from '../subcomponents/SideBar.vue';
 import ClassroomDisplay from './ClassroomDisplay.vue';
+import StudentDetail from '../subcomponents/StudentDetail.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'ClassroomDesigner',
     components: {
         'main-header': MainHeader,
-        'sidebar': SideBar,
-        'classroom-specifications-form': ClassroomSpecificationsForm,
+        'sidebar': SideBar,        
         'classroom-display': ClassroomDisplay,
-        FontAwesomeIcon
+        'student-detail': StudentDetail,
+        FontAwesomeIcon,
     },
     data() {
         return {
             sideBarIsActive: false,
-            ViewIsVisible: false,
-            faArrowRight: faArrowRight
+            ViewIsVisible: true,
+            faArrowRight: faArrowRight,
+            selectedStudentInfo: Object,
         };
     },
     methods: {
         onCloseSidebar() {
             this.sideBarIsActive = false;
-        },
-        openSidebar() {
-            this.sideBarIsActive = true;
         },
         onSubmitSpecifications(newSpecs) {
             this.ClassroomSpecifications = newSpecs;
@@ -49,8 +50,9 @@ export default defineComponent({
             else
                 this.ViewIsVisible = true;
         },
-        onConfirm() {
-
+        onStudentSelected(studentInfo){
+            this.selectedStudentInfo = studentInfo;
+            this.sideBarIsActive = true;            
         }
     },
 });

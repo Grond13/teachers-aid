@@ -102,7 +102,7 @@ export default {
   cursor: pointer;
 }
 
-.sidebar-body {
+.sidebar-body {  
   display: flex;
   flex-direction: column;
   justify-content: center;

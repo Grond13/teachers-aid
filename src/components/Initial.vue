@@ -15,14 +15,11 @@ import Registration from './Registration.vue';
 export default defineComponent({
     name: "Initial",
     data() {
-        return {
-            loginActive: true,
-        }
+        return { loginActive: true }
     },
     methods: {
         onSwitchView(value) {
-            this.loginActive = value;
-            console.log(this.loginActive);
+            this.loginActive = value;            
         },        
     },
     components: {

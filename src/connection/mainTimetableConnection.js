@@ -12,7 +12,7 @@ export async function GetTimetable() {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          //console.log(xhr.responseText);
+          console.log(xhr.responseText);
           resolve(xhr.responseText);
         } else {
           reject(new Error(`HTTP error: ${xhr.status}`));

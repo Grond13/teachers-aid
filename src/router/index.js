@@ -21,6 +21,11 @@ const router = createRouter({
       name: 'classroom',
       component: () => import(/* webpackChunkName: "ClassRoomDesigner" */ '../components/ClassroomDesigner.vue')
     },
+    {
+      path: '/session',
+      name: 'session',
+      component: () => import(/* webpackChunkName: "TeachingSession" */ '../components/TeachingSession.vue')
+    }
   ]
 });
 

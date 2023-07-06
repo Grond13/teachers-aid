@@ -17,17 +17,15 @@
     </div>
     <div class="uneditableContent">
       {{ this.lesson.end }}
-    </div>
-        
+    </div>        
     <label for="selectLessons">
       Lesson:
       <select name="lessonNames" id="selectLessons" v-model="lesson.idLesson">        
-        <option v-for="lessonName in LessonNames" :value="lessonName.idLesson" :key="lessonName.idLesson">
+        <option v-for="lessonName in LessonNames" v-bind:value="lessonName.idLesson" :key="lessonName.idLesson">
           {{ lessonName.name }}
         </option>
       </select>
     </label>
-
     <label for="selectClassrooms">
       Classroom:
       <select name="classroomNames" id="selectClassroom" v-model="lesson.idClassroom">        
@@ -35,13 +33,11 @@
           {{ classroomName.name }}
         </option>
       </select>
-    </label>
-   
+    </label>  
     <label for="inputNote">
       Note:
       <textarea name="note" id="inputNote" cols="30" rows="4" v-model="note"></textarea>
     </label>
-
     <div class="buttonBox">
       <button class="cancel" @click.prevent="onCancelClicked()">Cancel</button>
       <button class="submit" @click.prevent="onSubmitClicked()">Submit</button>            

@@ -35,19 +35,20 @@ function generateTeachersDeskRow(deskCount, deskSize, teachersDeskPosition) {
     for (let i = 0; i < deskCount; i++) {
         result[i] = [];
         if (i == teachersDeskPosition - 1) {                        
-            result[i][0] = { name: "Katedra", isTeachersDesk: true };
+            result[i] = { name: "Katedra", isTeachersDesk: true };
         }
         else{
             for (let j = 0; j < deskSize; j++) {
-                result[i][j] = { name: "", isInvisible: true };
+                result[i] = { name: "", isInvisible: true };
             }
         }
     }
+    console.log(result);
     return result;
 }
 
 export async function GetDesks() {
-
+    return JSON.parse(await ClassroomConnection.GetDesks());
 }
 
 export function CalculateHeight(rowCount, columnCount) {

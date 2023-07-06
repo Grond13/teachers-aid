@@ -2,7 +2,7 @@
     <table>
         <tbody class="desksTableBody">
             <tr v-for="(row, rowIndex) in Desks" :key="rowIndex">
-                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskId" :cards="Desks[rowIndex][deskIndex]" :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" />
+                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskId" :cards="Desks[rowIndex][deskIndex]" :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" @studentSelected="onStudentSelected"/>
             </tr>
         </tbody>
     </table>
@@ -13,46 +13,63 @@ import * as classroomLogic from '../logic/classroomLogic.js';
 import Desk from "@/subcomponents/Desk.vue";
 
 export default {
-    name: "ClassroomDisplay",
-    data() {
-        return {
-            Desks: [],
-            cardHeight: "75",
-            cardWidth: "115",
-        };
+  name: "ClassroomDisplay",
+  data() {
+    return {
+      Desks: [],
+      cardHeight: "75",
+      cardWidth: "115",
+      localClassroomSpecifications: null, 
+    };
+  },
+  props: {
+    DatabaseLoadDisabled: {
+      type: Boolean,
+      default: false,
     },
-    props: {
-        DatabaseLoadDisabled: {
-            type: Boolean,
-            default: false,
-        },
-        ClassroomSpecifications: {
-            type: Object
-        }
+    ClassroomSpecifications: {
+      type: Object,
     },
-    components: { Desk },
-    methods: {
-        async getDesks() {
-            if (!this.DatabaseLoadDisabled)
-                this.Desks = await classroomLogic.getDesks();
-            else
-                this.Desks = classroomLogic.GetEmptyDesks(this.ClassroomSpecifications);
-            //console.log(this.Desks);
+  },
+  components: { Desk },
+  methods: {
+    async getDesks() {
+      if (!this.DatabaseLoadDisabled) {
+        this.Desks = await classroomLogic.GetDesks();
+      } else {
+        this.Desks = classroomLogic.GetEmptyDesks(this.ClassroomSpecifications);
+      }
 
-            this.cardHeight = this.calculateHeight(this.ClassroomSpecifications.rows, this.ClassroomSpecifications.columns);
-            this.cardWidth = this.calculateWidth(this.ClassroomSpecifications.columns);
-        },
-        calculateHeight(rowCount, columnCount) {
-            return classroomLogic.CalculateHeight(rowCount, columnCount);
-        },
-        calculateWidth(columnCount) {
-            return classroomLogic.CalculateWidth(columnCount);
-        },
+      console.log(this.Desks);
+
+      this.localClassroomSpecifications = { 
+        rows: this.Desks.length,
+        columns: this.Desks[0].length,
+      };
+
+      this.cardHeight = this.calculateHeight(
+        this.localClassroomSpecifications.rows,
+        this.localClassroomSpecifications.columns
+      );
+      this.cardWidth = this.calculateWidth(
+        this.localClassroomSpecifications.columns
+      );
     },
-    mounted() {
-        this.getDesks();
+    calculateHeight(rowCount, columnCount) {
+      return classroomLogic.CalculateHeight(rowCount, columnCount);
     },
+    calculateWidth(columnCount) {
+      return classroomLogic.CalculateWidth(columnCount);
+    },
+    onStudentSelected(studentInfo){
+      this.$emit('studentSelected', studentInfo);
+    }
+  },
+  mounted() {
+    this.getDesks();
+  },
 };
+
 </script>
   
 <style scoped>
