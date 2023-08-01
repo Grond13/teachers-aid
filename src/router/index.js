@@ -1,7 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Initial from '../components/Initial.vue';
-import Main from '../components/Main.vue';
-//import { navigateToMain } from './routerFunctions.js';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,7 +22,12 @@ const router = createRouter({
       path: '/session',
       name: 'session',
       component: () => import(/* webpackChunkName: "TeachingSession" */ '../components/TeachingSession.vue')
-    }
+    },
+    {
+      path: '/student',
+      name: 'studentRegistration',
+      component: () => import(/* webpackChunkName: "StudentRegistration" */ '../components/StudentRegistration.vue')
+    },
   ]
 });
 

@@ -1,4 +1,4 @@
-  <template>
+<template>
   <table id="timetable">
     <thead>
       <tr>
@@ -7,21 +7,18 @@
       </tr>
     </thead>
     <tbody v-if="days.length">
-      <TableRow
-        v-for="(day, index) in days"
-        :key="index"
-        v-bind:day="day['day']"
-        :lessons="day['classes']"
-        v-on:cellClicked="onCellClicked"
-        v-on:editClicked="onEditClicked"
-      />
+      <TableRow v-for="(day, index) in days" :key="index" 
+        v-bind:day="day['day']" :lessons="day['classes']"
+        v-on:cellClicked="onCellClicked" v-on:editClicked="onEditClicked" />
     </tbody>
   </table>
 </template>
   
-  <script>
+<script>
 import * as mainTimetableLogic from "../logic/mainTimetableLogic.js";
 import TableRow from "@/subcomponents/TableRow.vue";
+import { mapActions } from 'vuex';
+import router from "../router";
 
 export default {
   name: "MainTimetable",
@@ -47,8 +44,17 @@ export default {
     async getTimetable() {
       this.days = await mainTimetableLogic.GetTimetable();
     },
+    ...mapActions('moduleName', ['updateIdLessonAndTime']),
     onCellClicked(cell) {
-      //this.$emit("editClass", cell);
+      if (cell.idLessonTime) {
+        const idLesson = cell.idLesson;
+        const idLessonTime = cell.idLessonTime;
+
+        this.$store.dispatch('updateIdLessonAndTime', { idLesson, idLessonTime });
+        router.push({ name: 'session' });
+      }
+      else
+        this.onEditClicked(cell);
     },
     onEditClicked(cell) {
       this.$emit("editClass", cell);
@@ -60,7 +66,7 @@ export default {
 };
 </script>
   
-  <style>
+<style>
 #timetable {
   width: 100%;
   border-collapse: collapse;

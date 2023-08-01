@@ -1,65 +1,58 @@
 <template>
-    <tr>
-      <td>{{ day }}</td>
-      <td v-for="lesson in lessons" :key="lesson.uuid" v-bind:class="lesson.name ? 'non-empty' : 'empty'"
-          v-on:click="onCellClicked(lesson)" @mouseenter="setHoveredLesson(lesson)" @mouseleave="setHoveredLesson(null)">
-        <div v-if="lesson.name" class="lesson-name">{{ lesson.name }}</div>
-        <div v-if="lesson.classroom" class="lesson-classroom">{{ lesson.classroom }}</div>
-        <div v-if="lesson.note !== null && lesson.note" class="lesson-note">{{ lesson.note }}</div>
-        <button v-if="lesson.name && isHovered(lesson)" class="editButton" @click="onEditClicked(lesson)">
-          <font-awesome-icon :icon="['fas', 'edit']" class="icon" />
-        </button>
-        <button v-if="!lesson.name" class="plusButton">
-          <font-awesome-icon :icon="['fas', 'plus']" />
-        </button>
-      </td>
-    </tr>
-  </template>
-    
-  <script>
-  import { library } from '@fortawesome/fontawesome-svg-core';
-  import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  
-  library.add(faPlus, faEdit);
-  
-  export default {
-    props: {
-      day: {
-        type: String,
-        required: true,
-      },
-      lessons: {
-        type: Array,
-        required: true,
-      },
+  <tr>
+    <td>{{ day }}</td>
+    <td v-for="lesson in lessons" :key="lesson.uuid" v-bind:class="lesson.name ? 'non-empty' : 'empty'"
+        v-on:click="onCellClicked(lesson)">
+      <div v-if="lesson.name" class="lesson-name">{{ lesson.name }}</div>
+      <div v-if="lesson.classroom" class="lesson-classroom">{{ lesson.classroom }}</div>
+      <div v-if="lesson.note !== null && lesson.note" class="lesson-note">{{ lesson.note }}</div>
+      <button v-if="lesson.name" class="editButton" @click="onEditClicked(lesson, $event)">
+        <font-awesome-icon :icon="['fas', 'edit']" class="icon" />
+      </button>
+      <button v-if="!lesson.name" class="plusButton">
+        <font-awesome-icon :icon="['fas', 'plus']" />
+      </button>
+    </td>
+  </tr>
+</template>
+
+<script>
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(faPlus, faEdit);
+
+export default {
+  props: {
+    day: {
+      type: String,
+      required: true,
     },
-    data() {
-      return {
-        hoveredLesson: null,
-      };
+    lessons: {
+      type: Array,
+      required: true,
     },
-    methods: {
-      onCellClicked(cell) {
-        this.$emit('cellClicked', cell);
-      },
-      onEditClicked(lesson) {
-        this.$emit('editClicked', lesson);
-      },
-      isHovered(lesson) {
-        return this.hoveredLesson === lesson;
-      },
-      setHoveredLesson(lesson) {
-        this.hoveredLesson = lesson;
-      },
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    onCellClicked(cell) {
+      this.$emit('cellClicked', cell);
     },
-    components: {
-      FontAwesomeIcon
+    onEditClicked(lesson, event) {
+      event.stopPropagation(); 
+      this.$emit('editClicked', lesson);
     },
-  };
-  </script>
-  
-  <style scoped>
+  },
+  components: {
+    FontAwesomeIcon,
+  },
+};
+</script>
+
+<style scoped>
   td {
     padding: 10px;
     border: 1px solid #ccc;
@@ -122,6 +115,10 @@
     cursor: pointer;
   }
   
+  button.editButton{
+    display: none;
+  }
+
   .editButton {
     display: none;
     position: absolute;

@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
-    name: 'ClassroomDesigner',
+    name: 'TeachingSession',
     components: {
         'main-header': MainHeader,
         'sidebar': SideBar,        
@@ -41,20 +41,12 @@ export default defineComponent({
         onCloseSidebar() {
             this.sideBarIsActive = false;
         },
-        onSubmitSpecifications(newSpecs) {
-            this.ClassroomSpecifications = newSpecs;
-            console.log(this.ClassroomSpecifications);
-            this.sideBarIsActive = false;
-            if (this.ViewIsVisible)
-                this.$refs.ClassroomDisplay.getDesks();
-            else
-                this.ViewIsVisible = true;
-        },
         onStudentSelected(studentInfo){
             this.selectedStudentInfo = studentInfo;
             this.sideBarIsActive = true;            
         }
     },
+    
 });
 </script>
   

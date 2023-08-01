@@ -11,7 +11,6 @@ import StudentCard from './StudentCard.vue';
 export default {
   props: {
     cards: {
-      type: Array,
       required: true,
     },
     cardHeight: {

@@ -2,7 +2,7 @@
     <table>
         <tbody class="desksTableBody">
             <tr v-for="(row, rowIndex) in Desks" :key="rowIndex">
-                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskId" :cards="Desks[rowIndex][deskIndex]" :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" @studentSelected="onStudentSelected"/>
+                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskIndex" :cards="Desks[rowIndex][deskIndex]" :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" @studentSelected="onStudentSelected"/>
             </tr>
         </tbody>
     </table>
@@ -27,6 +27,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    limitedLoad: {
+      type: Boolean,
+      default: false,
+    },
     ClassroomSpecifications: {
       type: Object,
     },
@@ -41,19 +45,18 @@ export default {
       }
 
       console.log(this.Desks);
+      console.log(this.Desks.length);
+      console.log(this.Desks[0]);
 
       this.localClassroomSpecifications = { 
         rows: this.Desks.length,
-        columns: this.Desks[0].length,
+        columns: this.Desks[0].length * this.Desks[0][0].length,        
       };
+      console.log("test");
+      console.log(this.localClassroomSpecifications);
 
-      this.cardHeight = this.calculateHeight(
-        this.localClassroomSpecifications.rows,
-        this.localClassroomSpecifications.columns
-      );
-      this.cardWidth = this.calculateWidth(
-        this.localClassroomSpecifications.columns
-      );
+      this.cardHeight = this.calculateHeight(this.localClassroomSpecifications.rows,this.localClassroomSpecifications.columns);
+      this.cardWidth = this.calculateWidth(this.localClassroomSpecifications.columns);
     },
     calculateHeight(rowCount, columnCount) {
       return classroomLogic.CalculateHeight(rowCount, columnCount);

@@ -29,7 +29,8 @@
 
             <label for="password2" class="form-label">Password again: </label>
             <input v-model="password2" type="password"
-                :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password2" required>
+                :class="{ 'form-control': true, 'is-invalid': !passwordIsValid || !passwordsMatch }" id="password2"
+                required>
             <div v-if="!passwordIsValid" id="passwordInvalidError" class="invalid-feedback">
                 Password has to be at least 7 characters long.
             </div>
@@ -88,14 +89,12 @@ export default {
             var pwCheck = RegistrationLogic.validatePasswords(this.password, this.password2);
             if (!pwCheck.match) {
                 this.passwordsMatch = false;
-                console.log("passwords do not match");
-                console.log(this.passwordsMatch);
                 return;
             }
             else this.passwordsMatch = true;
             if (!pwCheck.isValid) {
                 this.passwordIsValid = false;
-                console.log("passwords are not valid");
+
                 return;
             }
             else this.passwordIsValid = true;
@@ -110,4 +109,6 @@ export default {
 }
 </script>
 
-<style scoped>@import '../assets/forms.css';</style>
+<style scoped>
+@import '../assets/forms.css';
+</style>

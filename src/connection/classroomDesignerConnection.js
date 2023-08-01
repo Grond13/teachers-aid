@@ -1,11 +1,10 @@
 import store from '../store';
 
-export async function GetDesks() {
+export async function InsertClassroom(specs) {
     const token = store.state.token;
-    const lessonTime = store.state.idLessonTime;
 
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/getTeachingSession.php';
+        const url = 'http://localhost/teachers-aid-api/View/insertClassroom.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);
@@ -17,16 +16,15 @@ export async function GetDesks() {
                 const responseData = xhr.responseText;
                 resolve(responseData);
             } else {
-                console.log(xhr.responseText);
-                reject(new Error('Get request failed'));
+                reject(new Error('Insert request failed'));
             }
         };
 
         xhr.onerror = function () {
-            reject(new Error('Get request error'));
+            reject(new Error('Insert request error'));
         };
 
-        console.log(lessonTime);
-        xhr.send(JSON.stringify({ token: token, lessonTime: lessonTime }));
+        console.log(specs);
+        xhr.send(JSON.stringify({ specs: specs, token: token }));
     });
 }

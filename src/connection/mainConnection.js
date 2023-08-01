@@ -42,7 +42,7 @@ export async function createClass(newClass) {
         xhr.onload = function () {
             if (xhr.status >= 200 && xhr.status < 300) {                
                 const responseData = xhr.responseText;     
-                console.log(responseData);            
+                //console.log(responseData);            
                 resolve(responseData);
             } else {
                 reject(new Error('Create request failed'));
@@ -134,7 +134,7 @@ export async function getLessonNames() {
             reject(new Error('Get Lesson Names request error'));            
         };
 
-        console.log(JSON.stringify({ token: token }));
+        //console.log(JSON.stringify({ token: token }));
 
         xhr.send(JSON.stringify({ token: token }));
     });

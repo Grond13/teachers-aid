@@ -16,7 +16,7 @@ export async function login(email, password) {
       if (xhr.responseText.substring(0, 5) != "ERROR") { //TODO: reverse - alert when token is coming - safer
         const token = xhr.responseText;
         store.commit('setToken', token); 
-        console.log(store.state.token); 
+        //console.log(store.state.token); 
         router.push({ name: 'main' });
       } else {        
         console.log(xhr.responseText);

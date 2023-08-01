@@ -62,7 +62,7 @@ export default {
         console.log(this.studentInfo);
     },
     methods: {
-        setCardSize() {
+        setCardSize() {                    
             const cardElements = document.getElementsByClassName('card');
             for (let i = 0; i < cardElements.length; i++) {
                 const card = cardElements[i];

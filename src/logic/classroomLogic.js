@@ -1,6 +1,4 @@
 import * as ClassroomConnection from '../connection/classroomConnection.js';
-import { v4 as uuidv4 } from 'uuid';
-
 
 export function GetEmptyDesks(specs) {
     console.log(specs);
@@ -30,16 +28,16 @@ function generateDesk(deskSize) {
 }
 
 function generateTeachersDeskRow(deskCount, deskSize, teachersDeskPosition) {
-    console.log(teachersDeskPosition);
+    //console.log(teachersDeskPosition);
     let result = [];
     for (let i = 0; i < deskCount; i++) {
         result[i] = [];
         if (i == teachersDeskPosition - 1) {                        
-            result[i] = { name: "Katedra", isTeachersDesk: true };
+            result[i][0] = { name: "Katedra", isTeachersDesk: true };
         }
         else{
             for (let j = 0; j < deskSize; j++) {
-                result[i] = { name: "", isInvisible: true };
+                result[i][j] = { name: "", isInvisible: true };
             }
         }
     }
@@ -59,14 +57,11 @@ export function CalculateHeight(rowCount, columnCount) {
 }
 
 export function CalculateWidth(columnCount) {
-    return (415 - ((300 / 12) * columnCount));
+    //console.log(columnCount);
+    //console.log((415 - ((300 / 12) * columnCount)));
+    return (415 - ((300 / 12) * columnCount));    
 }
 
 
-export async function InsertClassroom(classroomSpecs) {
-    if (classroomSpecs.name && classroomSpecs.rows && classroomSpecs.columns && classroomSpecs.deskSize) {
-        ClassroomConnection.InsertClassroom(classroomSpecs);
-    }
-    else return "ERROR: Missing specifications."
-}
+
 
