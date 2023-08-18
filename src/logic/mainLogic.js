@@ -32,3 +32,7 @@ export async function getLessonNames() {
     return JSON.parse(await mainConnection.getLessonNames());
 }
 
+export async function insertLesson(Lesson){
+    return JSON.parse(await mainConnection.insertLesson(Lesson));
+}
+

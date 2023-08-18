@@ -1,12 +1,23 @@
 import * as teachingSessionConnection from '../connection/teachingSessionConnection.js';
 
 
-export async function getTeachingSession() {
-    const raw = await mainTimetableConnection.GetTimetable();
+export async function insertSmallGrade(idStudent, isPlus, description) {
+    const result = JSON.parse(await teachingSessionConnection.insertSmallGrade(idStudent, isPlus, description));
     
-    var deskRows = JSON.parse(raw);        
-    console.log(deskRows);        
+    console.log(result);
 
-    return rows;
+    return result;
 }
 
+export async function updateRating(idStudent, activityValue){
+    const result = await teachingSessionConnection.updateRating(idStudent, activityValue);
+
+    return result;
+}
+
+
+export async function updateNote(idStudent, note){
+    const result = await teachingSessionConnection.updateNote(idStudent, note);
+
+    return result;
+}

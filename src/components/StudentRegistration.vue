@@ -18,8 +18,8 @@
                     Please enter a valid surname.
                 </div>
 
-                <label for="email" class="form-label">Classroom Identification Number: </label>
-                <input v-model="classroomId" type="text" :class="{ 'form-control': true, 'is-invalid': !idIsValid }"
+                <label for="email" class="form-label">Class Identification Number: </label>
+                <input v-model="idLessonTime" type="text" :class="{ 'form-control': true, 'is-invalid': !idIsValid }"
                     id="classroomId" required>
 
                 <div class="center">
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="graphicWrapper" v-else>
-        <classroom-display ref="ClassroomDisplay" :DatabaseLoadDisabled="false" :limitedLoad="true"></classroom-display>
+        <classroom-display ref="ClassroomDisplay" :DatabaseLoadDisabled="false" :limitedLoad="true" @studentSelected="onSeatSelected"></classroom-display>
     </div>
 </template>
   
@@ -38,6 +38,7 @@ import { defineComponent } from 'vue';
 import initialHeader from '../subcomponents/initialHeader.vue';
 import ClassroomDisplay from './ClassroomDisplay.vue';
 import * as StudentRegistrationLogic from '../logic/studentRegistrationLogic.js';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
     name: 'StudentRegistration',
@@ -50,14 +51,17 @@ export default defineComponent({
             classroomDisplayIsActive: false,
             name: '',
             surname: '',
-            classroomId: '',
+            idLessonTime: '',
             nameIsValid: true,
             surnameIsValid: true,
             idIsValid: true,
         };
     },
     methods: {
+        ...mapActions('moduleName', ['updateIdLessonTimeOnly']),        
         async onSubmitForm() {
+            console.log("submitted");
+
             if (!StudentRegistrationLogic.validateName(this.name)) {
                 this.nameIsValid = false;
                 return;
@@ -69,11 +73,18 @@ export default defineComponent({
                 return;
             }
             else this.surnameIsValid = true;
-
-            await this.StudentRegistrationLogic.getLimitedDesks(this.classroomId);
+                        
+            this.$store.dispatch('updateIdLessonTimeOnly', this.idLessonTime);
 
             this.classroomDisplayIsActive = true;
+            // temporary
+            //console.log(await StudentRegistrationLogic.registerStudent(this.name, this.surname, this.idLessonTime));
         },
+        onSeatSelected(seat){
+            if(seat.appearance == "empty" && !seat.isTeachersDesk){
+                StudentRegistrationLogic.registerStudent(seat, this.name, this.surname, this.idLessonTime);
+            }
+        }
     },
 });
 </script>

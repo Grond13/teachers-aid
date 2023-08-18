@@ -4,7 +4,7 @@ export async function updateClass(updatedClass) {
     const token = store.state.token;
 
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/updateLessonTime.php';
+        const url = 'http://81.95.108.205/teachers-aid-api/View/updateLessonTime.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);
@@ -33,7 +33,7 @@ export async function createClass(newClass) {
     const token = store.state.token;    
 
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/insertLessonTime.php';
+        const url = 'http://81.95.108.205/teachers-aid-api/View/insertLessonTime.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);
@@ -62,7 +62,7 @@ export async function deleteClass(deletedClass) {
     const token = store.state.token;    
 
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/deleteLessonTime.php';
+        const url = 'http://81.95.108.205/teachers-aid-api/View/deleteLessonTime.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);
@@ -89,7 +89,7 @@ export async function deleteClass(deletedClass) {
 export async function getClassroomNames() {
     const token = store.state.token;
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/getClassroomNames.php';
+        const url = 'http://81.95.108.205/teachers-aid-api/View/getClassroomNames.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);
@@ -116,7 +116,7 @@ export async function getLessonNames() {
     const token = store.state.token;
 
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/getLessonNames.php';
+        const url = 'http://81.95.108.205/teachers-aid-api/View/getLessonNames.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);
@@ -137,5 +137,34 @@ export async function getLessonNames() {
         //console.log(JSON.stringify({ token: token }));
 
         xhr.send(JSON.stringify({ token: token }));
+    });
+}
+
+export async function insertLesson(LessonName) {
+    const token = store.state.token;    
+
+    return new Promise((resolve, reject) => {
+        const url = 'http://81.95.108.205/teachers-aid-api/View/insertLesson.php';
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {                
+                const responseData = xhr.responseText;     
+                //console.log(responseData);            
+                resolve(responseData);
+            } else {
+                reject(new Error('Insert request failed'));
+            }
+        };
+
+        xhr.onerror = function () {
+            reject(new Error('Insert request error'));
+        };
+
+
+        xhr.send(JSON.stringify({ name: LessonName, token: token }));
     });
 }

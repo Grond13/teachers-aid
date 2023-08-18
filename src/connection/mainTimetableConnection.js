@@ -6,7 +6,7 @@ export async function GetTimetable() {
 
   return new Promise(function(resolve, reject) {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/teachers-aid-api/View/getTimetable.php', true);
+    xhr.open('POST', 'http://81.95.108.205/teachers-aid-api/View/getTimetable.php', true);
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onreadystatechange = function () {

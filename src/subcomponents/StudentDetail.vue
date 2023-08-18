@@ -1,18 +1,18 @@
 <template>
   <div class="gradeContainer" v-if="studentInfo.idStudent">
-    <button class="minusGrade" @click="onMinusClicked($event)">-</button>
+    <button class="minusGrade" @click="onMinusClicked($event, 'classwork')">-</button>
     <div class="descriptionOptions minusOptions">
-      <div>Práce v hodině</div>
-      <div>Domácí úkol</div>
-      <div>Ústní zkoušení</div>
-      <div>Pozdní příchod</div>
+      <div class="option" @click="onMinusClicked($event, 'classwork')">Práce v hodině</div>
+      <div class="option" @click="onMinusClicked($event, 'homework')">Domácí úkol</div>
+      <div class="option" @click="onMinusClicked($event, 'oral exam')">Ústní zkoušení</div>
+      <div class="option" @click="onMinusClicked($event, 'late arrival')">Pozdní příchod</div>
     </div>
     <div class="gradeValue">{{ calculateGradeValue() }}</div>
-    <button class="plusGrade" @click="onPlusClicked($event)">+</button>
+    <button class="plusGrade" @click="onPlusClicked($event, 'classwork')">+</button>
     <div class="descriptionOptions plusOptions">
-      <div>Práce v hodině</div>
-      <div>Domácí úkol</div>
-      <div>Ústní zkoušení</div>
+      <div class="option" @click="onPlusClicked($event, 'classwork')">Práce v hodině</div>
+      <div class="option" @click="onPlusClicked($event, 'homework')">Domácí úkol</div>
+      <div class="option" @click="onPlusClicked($event, 'oral exam')">Ústní zkoušení</div>
     </div>
   </div>
 
@@ -28,12 +28,11 @@
         {{ grade.description }}
       </span>
     </div>
-  </section>  
+  </section>
   <section class="notes">
     <h5>Notes</h5>
-    <p>
-      {{ studentInfo.note }}
-    </p>
+    <textarea v-model="noteInput" @input="onNoteInput"></textarea>
+    <button v-if="isNoteModified" class="submitNote" @click="onSubmitNote">Submit</button>
   </section>
 </template>
         
@@ -45,23 +44,43 @@ export default {
       type: Object
     },
   },
+  data() {
+    return {
+      noteInput: "",
+      originalNote: "",
+    };
+  },
+  computed: {
+    isNoteModified() {
+      return this.noteInput !== this.originalNote;
+    },
+  },
   watch: {
-
+    'studentInfo.note': {
+      handler(newVal) {
+        this.noteInput = newVal;
+        this.originalNote = newVal;
+      },
+      immediate: true,
+    },
   },
   methods: {
     calculateGradeValue() {
-      const isPlus1 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus === '1').length;
-      const isPlus0 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus === '0').length;
+      const isPlus1 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus == '1').length;
+      const isPlus0 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus == '0').length;
       return isPlus1 - isPlus0;
     },
-    onMinusClicked(event) {
-      //console.log('Minus clicked');
-      //studentInfo.;
+    onMinusClicked(event, description) {
+      this.$emit('insertSmallGrade', this.studentInfo.idStudent, false, description);
+      console.log("minus clicked");
       event.stopPropagation();
     },
-    onPlusClicked(event) {
-      //console.log('Plus clicked');
+    onPlusClicked(event, description) {
+      this.$emit('insertSmallGrade', this.studentInfo.idStudent, true, description);
       event.stopPropagation();
+    },    
+    onSubmitNote() {
+      this.$emit('submitNote', this.studentInfo.idStudent, this.noteInput);
     },
   },
 };
@@ -194,17 +213,33 @@ span.gradeDesc {
   width: 45%;
 }
 
-section.notes{
-  margin-top: 30px;
+section.notes {
+  margin: 30px;
+  padding: 0 5px;
+  width: 100%;
 }
 
-section.notes h5{
+section.notes h5 {
   padding: 5px 0;
   text-align: center;
 }
 
-section.notes p{
-  padding: 3px;
+section.notes textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
+section.notes button.submitNote {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  /* Blue color, you can change this */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 </style>

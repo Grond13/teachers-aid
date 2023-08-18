@@ -1,35 +1,36 @@
 <template>
-    <div class="card" :class="studentInfo.activityValue ? studentInfo.activityValue : 'empty'" @click="onCardClicked($event)">
-      <div class="ratingContainer" v-if="studentInfo.idStudent">
-        <button class="ratingMinus" @click="onMinusRatingClicked($event)">
-          <font-awesome-icon icon="fa-regular fa-thumbs-down" />
-        </button>
-        <button class="ratingPlus" @click="onPlusRatingClicked($event)">
-          <font-awesome-icon icon="fa-regular fa-thumbs-up" />
-        </button>
+  <div class="card" :class="studentInfo.activityValue ? 'activity' + studentInfo.activityValue : 'empty'"
+    @click="onCardClicked($event)">
+    <div class="ratingContainer" v-if="studentInfo.appearance == 'full'">
+      <button class="ratingMinus" @click="onMinusRatingClicked($event)">
+        <font-awesome-icon icon="fa-regular fa-thumbs-down" />
+      </button>
+      <button class="ratingPlus" @click="onPlusRatingClicked($event)">
+        <font-awesome-icon icon="fa-regular fa-thumbs-up" />
+      </button>
+    </div>
+    <div class="nameContainer">
+      <b v-if="studentInfo.appearance == 'full' || studentInfo.appearance == 'limited'">{{ studentInfo.surname }} </b>
+      {{ studentInfo.name }}
+    </div>
+    <div class="gradeContainer" v-if="studentInfo.appearance == 'full'">
+      <button class="minusGrade" @click="onMinusClicked($event, 'classwork')">-</button>
+      <div class="descriptionOptions minusOptions">
+        <div class="option" @click="onMinusClicked($event, 'classwork')">Práce v hodině</div>
+        <div class="option" @click="onMinusClicked($event, 'homework')">Domácí úkol</div>
+        <div class="option" @click="onMinusClicked($event, 'oral exam')">Ústní zkoušení</div>
+        <div class="option" @click="onMinusClicked($event, 'late arrival')">Pozdní příchod</div>
       </div>
-      <div class="nameContainer">
-        <b v-if="studentInfo.idStudent">{{ studentInfo.surname }} </b>
-        {{ studentInfo.name }}
-      </div>
-      <div class="gradeContainer" v-if="studentInfo.idStudent">
-        <button class="minusGrade" @click="onMinusClicked($event)">-</button>
-        <div class="descriptionOptions minusOptions">
-          <div>Práce v hodině</div>
-          <div>Domácí úkol</div>
-          <div>Ústní zkoušení</div>
-          <div>Pozdní příchod</div>
-        </div>
-        <div class="gradeValue">{{ calculateGradeValue() }}</div>
-        <button class="plusGrade" @click="onPlusClicked($event)">+</button>
-        <div class="descriptionOptions plusOptions">
-          <div>Práce v hodině</div>
-          <div>Domácí úkol</div>
-          <div>Ústní zkoušení</div>          
-        </div>
+      <div class="gradeValue">{{ calculateGradeValue() }}</div>
+      <button class="plusGrade" @click="onPlusClicked($event, 'classwork')">+</button>
+      <div class="descriptionOptions plusOptions">
+        <div class="option" @click="onPlusClicked($event, 'classwork')">Práce v hodině</div>
+        <div class="option" @click="onPlusClicked($event, 'homework')">Domácí úkol</div>
+        <div class="option" @click="onPlusClicked($event, 'oral exam')">Ústní zkoušení</div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   
 <script>
@@ -40,70 +41,75 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faThumbsUp, faThumbsDown);
 
 export default {
-    props: {
-        studentInfo: {
-            type: Object,
-            required: true,
-        },
-        cardHeight: {
-            required: true,
-        },
-        cardWidth: {
-            required: true,
-        },
+  props: {
+    studentInfo: {
+      type: Object,
+      required: true,
     },
-    data() {
-        return {
-            showDescriptionOptions: false,
-        };
+    cardHeight: {
+      required: true,
     },
-    mounted() {
-        this.setCardSize();
-        console.log(this.studentInfo);
+    cardWidth: {
+      required: true,
     },
-    methods: {
-        setCardSize() {                    
-            const cardElements = document.getElementsByClassName('card');
-            for (let i = 0; i < cardElements.length; i++) {
-                const card = cardElements[i];
-                card.style.height = this.cardHeight + 'px';
-                card.style.width = this.cardWidth + 'px';
-            }
-        },
-        calculateGradeValue() {
-            const isPlus1 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus === '1').length;
-            const isPlus0 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus === '0').length;
-            return isPlus1 - isPlus0;
-        },
-        onCardClicked(event) {
-            if (event.target.tagName !== 'BUTTON') {
-                //console.log('Card clicked');
-                this.$emit('studentSelected', this.studentInfo);
-            }
-        },
-        onMinusRatingClicked(event) {
-            //console.log('Minus rating clicked');
-            this.studentInfo.activityValue--;
-            event.stopPropagation();
-        },
-        onPlusRatingClicked(event) {
-            //console.log('Plus rating clicked');
-            this.studentInfo.activityValue++;
-            event.stopPropagation();
-        },
-        onMinusClicked(event) {
-            //console.log('Minus clicked');
-            //studentInfo.;
-            event.stopPropagation();
-        },
-        onPlusClicked(event) {
-            //console.log('Plus clicked');
-            event.stopPropagation();
-        },
+  },
+  data() {
+    return {
+      showDescriptionOptions: false,
+    };
+  },
+  mounted() {
+    this.setCardSize();
+    //console.log(this.studentInfo);
+  },
+  methods: {
+    setCardSize() {
+      const cardElements = document.getElementsByClassName('card');
+      for (let i = 0; i < cardElements.length; i++) {
+        const card = cardElements[i];
+        card.style.height = this.cardHeight + 'px';
+        card.style.width = this.cardWidth + 'px';
+      }
     },
-    components: {
-        FontAwesomeIcon,
+    calculateGradeValue() {
+      const isPlus1 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus == '1').length;
+      const isPlus0 = this.studentInfo.smallGrades.filter((grade) => grade.isPlus == '0').length;
+      return isPlus1 - isPlus0;
     },
+    onCardClicked(event) {
+      if (event.target.tagName !== 'button' && event.target.className !== 'option') {
+        this.$emit('studentSelected', this.studentInfo);
+      }
+      else {
+
+      }
+    },
+    onMinusRatingClicked(event) {
+      //console.log('Minus rating clicked');
+      //this.studentInfo.activityValue--;
+      this.$emit('updateRating', this.studentInfo.idStudent, this.studentInfo.activityValue - 1);
+      event.stopPropagation();
+    },
+    onPlusRatingClicked(event) {
+      //console.log('Plus rating clicked');
+      //this.studentInfo.activityValue++;
+      this.$emit('updateRating', this.studentInfo.idStudent, this.studentInfo.activityValue + 1);
+
+      event.stopPropagation();
+    },
+    onMinusClicked(event, description) {
+      //console.log('Minus clicked');
+      this.$emit('insertSmallGrade', this.studentInfo.idStudent, 0, description);
+      event.stopPropagation();
+    },
+    onPlusClicked(event, description) {
+      this.$emit('insertSmallGrade', this.studentInfo.idStudent, 1, description);
+      event.stopPropagation();
+    },
+  },
+  components: {
+    FontAwesomeIcon,
+  },
 };
 </script>
   
@@ -121,12 +127,52 @@ div.card {
   position: relative;
 }
 
+/* Define the colors for activityValue */
+div.card.activity1 {
+  background-color: #ff0000a1; 
+}
+
+div.card.activity2 {
+  background-color: #ff5100a1; 
+}
+
+div.card.activity3 {
+  background-color: #ffa100a1; 
+}
+
+div.card.activity4 {
+  background-color: #ffc400a1; 
+}
+
+div.card.activity5 {
+  background-color: #ffff00a1; 
+}
+
+div.card.activity6 {
+  background-color: #b8ff14a1; 
+}
+
+div.card.activity7 {
+  background-color: #75cf00a1;
+}
+
+div.card.activity8 {
+  background-color: #4dd632a1; 
+}
+
+div.card.activity9 {
+  background-color: #3cd83ca1; 
+}
+
+div.card.activity10 {
+  background-color: #00bb00a1; 
+}
+
 div.card.empty {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 div.gradeContainer {
   display: flex;
   align-items: center;
@@ -165,37 +211,39 @@ div.descriptionOptions {
   display: none;
   position: absolute;
   background-color: #fff;
-  border: 1px solid #ccc;  
+  border: 1px solid #ccc;
   width: 200px;
   z-index: 1;
 }
 
-div.descriptionOptions div{
+div.descriptionOptions div {
   padding: 5px;
 }
-div.plusOptions div:hover{
+
+div.plusOptions div:hover {
   background-color: var(--bg-medium-green);
-  cursor: pointer;  
+  cursor: pointer;
   font-weight: bold;
 }
-div.minusOptions div:hover{
+
+div.minusOptions div:hover {
   background-color: rgb(252, 176, 176);
-  cursor: pointer;  
+  cursor: pointer;
   font-weight: bold;
 }
 
 .minusOptions {
   top: 7px;
-  right: 72%;  
+  right: 72%;
 }
 
 .plusOptions {
   top: 7px;
-  left: 72%;  
+  left: 72%;
 }
 
-button.plusGrade:hover + .plusOptions,
-button.minusGrade:hover + .minusOptions,
+button.plusGrade:hover+.plusOptions,
+button.minusGrade:hover+.minusOptions,
 .plusOptions:hover,
 .minusOptions:hover {
   display: block;
@@ -210,6 +258,7 @@ div.gradeValue {
   justify-content: center;
   align-items: center;
   font-size: 1.3em;
+  background-color: white;
 }
 
 div.nameContainer {

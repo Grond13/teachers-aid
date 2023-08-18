@@ -8,7 +8,7 @@ export async function login(email, password) {
   };
 
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://localhost/teachers-aid-api/View/Login.php", true);
+  xhr.open("POST", "http://81.95.108.205/teachers-aid-api/View/Login.php", true);
   xhr.setRequestHeader("Content-Type", "application/json");
 
   xhr.onreadystatechange = function () {
@@ -16,7 +16,7 @@ export async function login(email, password) {
       if (xhr.responseText.substring(0, 5) != "ERROR") { //TODO: reverse - alert when token is coming - safer
         const token = xhr.responseText;
         store.commit('setToken', token); 
-        //console.log(store.state.token); 
+        console.log(xhr.responseText); 
         router.push({ name: 'main' });
       } else {        
         console.log(xhr.responseText);

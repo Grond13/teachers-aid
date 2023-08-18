@@ -2,10 +2,13 @@
     <div>
         <main-header></main-header>
         <div class="graphicWrapper">
-            <classroom-display ref="ClassroomDisplay" v-if="ViewIsVisible"
-                 :DatabaseLoadDisabled="false" @studentSelected="onStudentSelected"></classroom-display>
-            <sidebar v-if="sideBarIsActive" :header="this.selectedStudentInfo.surname + ' ' + this.selectedStudentInfo.name" @closeSidebar="onCloseSidebar">
-                <student-detail :studentInfo="this.selectedStudentInfo"></student-detail>
+            <classroom-display ref="ClassroomDisplay" v-if="ViewIsVisible" :DatabaseLoadDisabled="false"
+                @studentSelected="onStudentSelected" @insertSmallGrade="onInsertSmallGrade"
+                @updateRating="onUpdateRating"></classroom-display>
+            <sidebar v-if="sideBarIsActive" :header="this.selectedStudentInfo.surname + ' ' + this.selectedStudentInfo.name"
+                @closeSidebar="onCloseSidebar">
+                <student-detail :studentInfo="this.selectedStudentInfo" @insertSmallGrade="onInsertSmallGrade"
+                    @submitNote="onSubmitNote"></student-detail>
             </sidebar>
         </div>
     </div>
@@ -19,12 +22,13 @@ import ClassroomDisplay from './ClassroomDisplay.vue';
 import StudentDetail from '../subcomponents/StudentDetail.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import * as TeachingSessionLogic from '../logic/teachingSessionLogic';
 
 export default defineComponent({
     name: 'TeachingSession',
     components: {
         'main-header': MainHeader,
-        'sidebar': SideBar,        
+        'sidebar': SideBar,
         'classroom-display': ClassroomDisplay,
         'student-detail': StudentDetail,
         FontAwesomeIcon,
@@ -41,12 +45,26 @@ export default defineComponent({
         onCloseSidebar() {
             this.sideBarIsActive = false;
         },
-        onStudentSelected(studentInfo){
+        onStudentSelected(studentInfo) {
             this.selectedStudentInfo = studentInfo;
-            this.sideBarIsActive = true;            
+            this.sideBarIsActive = true;
+        },
+        async onInsertSmallGrade(idStudent, isPlus, description) {
+            const newGrades = await TeachingSessionLogic.insertSmallGrade(idStudent, isPlus, description);
+            this.selectedStudentInfo['smallGrades'] = newGrades;
+
+            this.$refs.ClassroomDisplay.getDesks();
+        },
+        async onUpdateRating(idStudent, activityValue) {
+            await TeachingSessionLogic.updateRating(idStudent, activityValue);
+
+            this.$refs.ClassroomDisplay.getDesks();
+        },
+        async onSubmitNote(idStudent, note) {
+            await TeachingSessionLogic.updateNote(idStudent, note);
         }
     },
-    
+
 });
 </script>
   

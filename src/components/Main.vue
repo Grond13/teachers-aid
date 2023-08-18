@@ -7,9 +7,9 @@
       <class-form :lesson="this.editedClass" :LessonNames="this.lessons" :ClassroomNames="this.classrooms"
         @closeSidebar="onCloseSidebar" @submit="onSubmit" @update:lesson="onUpdateLesson" @delete="onDelete"></class-form>
     </sidebar>    
-      <form @submit.prevent="onNewClassroomClicked()" class="form">
+      <form @submit.prevent="onNewLessonSubmit()" class="form">
         <label>
-          <input type="text" name="name" class="form-input" placeholder="Name of the Lesson">
+          <input type="text" name="name" class="form-input" placeholder="Name of the Lesson" v-model="newLessonName">
         </label>        
         <input type="submit" value="Add Lesson" class="form-submit">
       </form>
@@ -19,7 +19,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import MainHeader from './MainHeader.vue';
+import MainHeader from './MainHeader.vue' ;
 import MainTimetable from './MainTimetable.vue';
 import Sidebar from '../subcomponents/SideBar.vue';
 import ClassForm from '../subcomponents/ClassForm.vue';
@@ -35,6 +35,7 @@ export default defineComponent({
       editedClassCopy: null,
       lessons: [],
       classrooms: [],
+      newLessonName: null,
     };
   },
   methods: {
@@ -67,11 +68,9 @@ export default defineComponent({
     onNewClassroomClicked() {
       router.push({ name: 'classroom' });
     },
-    async onNewLessonSubmitted(){
-      if (await mainLogic.deleteClass(this.editedClass)) {
-        lessons = mainLogic.getLessonNames();
-      }
-      else console.log("ERROR: problem with adding the lesson");
+    async onNewLessonSubmit(){
+      //console.log(this.newLessonName);
+      await mainLogic.insertLesson(this.newLessonName);      
     },
   },
   async mounted() {

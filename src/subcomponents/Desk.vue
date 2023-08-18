@@ -1,7 +1,7 @@
 <template>
   <td class="desk">
     <student-card v-for="(studentInfo, cardIndex) in cards" :key="cardIndex" :studentInfo="studentInfo"
-      :cardHeight="cardHeight" :cardWidth="cardWidth" @studentSelected="onStudentCardClicked"></student-card>
+      :cardHeight="cardHeight" :cardWidth="cardWidth" @studentSelected="onStudentCardClicked" @insertSmallGrade="onInsertSmallGrade" @updateRating="onUpdateRating"></student-card>
   </td>
 </template>
 
@@ -28,6 +28,12 @@ export default {
       console.log(studentInfo);
       this.$emit('studentSelected', studentInfo);
     },
+    onInsertSmallGrade(idStudent, isPlus, description){      
+      this.$emit('insertSmallGrade', idStudent, isPlus, description)
+    },
+    onUpdateRating(idStudent, activityValue){
+      this.$emit('updateRating', idStudent, activityValue);
+    }
   },
 };
 </script>

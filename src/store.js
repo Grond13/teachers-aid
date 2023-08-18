@@ -19,6 +19,9 @@ export default new Vuex.Store({
     setIdLessonAndTime(state, { idLesson, idLessonTime }) {
       state.idLesson = idLesson;
       state.idLessonTime = idLessonTime;
+    },
+    setIdLessonTime(state, idLessonTime) {
+      state.idLessonTime = idLessonTime;
     }
   },
   actions: {
@@ -28,6 +31,9 @@ export default new Vuex.Store({
     updateIdLessonAndTime({ commit }, { idLesson, idLessonTime }) {
       commit('setIdLessonAndTime', { idLesson, idLessonTime });
     },
+    updateIdLessonTimeOnly({ commit }, idLessonTime) {
+      commit('setIdLessonTime', idLessonTime);
+    }
   },
   getters: {
     getToken: state => state.token,

@@ -49,6 +49,11 @@ export async function GetDesks() {
     return JSON.parse(await ClassroomConnection.GetDesks());
 }
 
+export async function GetLimitedDesks() {
+    console.log("getting limited desks \n");
+    return JSON.parse(await ClassroomConnection.GetLimitedDesks());
+}
+
 export function CalculateHeight(rowCount, columnCount) {
     if ((245 - ((175 / 8) * rowCount)) > CalculateWidth(columnCount))
         return CalculateWidth(columnCount);

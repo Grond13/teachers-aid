@@ -19,12 +19,16 @@
             <div class="center">
                 <a href="#" @click="switchView()">Register</a>
             </div>
-        </form>
+            <div class="center">
+                <a href="#" @click.prevent="navitgateToStudentRegistration">Student</a>
+                </div>
+            </form>
 
-    </div>
+        </div>
 </template>
 
 <script>
+import router from "../router";
 import * as loginLogic from '../logic/loginLogic.js';
 
 export default {
@@ -34,7 +38,7 @@ export default {
             password: '',
             emailIsValid: true,
             passwordIsValid: true
-        } 
+        }
     },
     methods: {
         submitForm() {
@@ -42,18 +46,21 @@ export default {
                 this.emailIsValid = true;
                 if (loginLogic.validatePassword(this.password)) {
                     loginLogic.login(this.email, this.password);
-                } 
+                }
                 else {
                     this.passwordIsValid = false;
-                } 
-            } 
+                }
+            }
             else {
                 this.emailIsValid = false;
             }
         },
-        switchView() { 
+        switchView() {
             this.$emit('switch-view', false);
         },
+        navitgateToStudentRegistration(){
+            router.push({name: 'studentRegistration'});
+        }
     }
 }
 </script>
@@ -62,7 +69,7 @@ export default {
 @import '../assets/forms.css';
 @import 'https://fonts.googleapis.com/css?family=Quicksand';
 
-#alert { 
+#alert {
     color: red;
     visibility: hidden;
     font-family: Quicksand;

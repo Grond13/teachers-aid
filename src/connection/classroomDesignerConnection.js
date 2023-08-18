@@ -4,7 +4,7 @@ export async function InsertClassroom(specs) {
     const token = store.state.token;
 
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost/teachers-aid-api/View/insertClassroom.php';
+        const url = 'http://81.95.108.205/teachers-aid-api/View/insertClassroom.php';
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', url, true);

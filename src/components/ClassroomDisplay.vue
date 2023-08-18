@@ -1,11 +1,12 @@
 <template>
-    <table>
-        <tbody class="desksTableBody">
-            <tr v-for="(row, rowIndex) in Desks" :key="rowIndex">
-                <Desk v-for="(desk, deskIndex) in row" :key="desk.deskIndex" :cards="Desks[rowIndex][deskIndex]" :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" @studentSelected="onStudentSelected"/>
-            </tr>
-        </tbody>
-    </table>
+  <table>
+    <tbody class="desksTableBody">
+      <tr v-for="(row, rowIndex) in Desks" :key="rowIndex">
+        <Desk v-for="(desk, deskIndex) in row" :key="desk.deskIndex" :cards="Desks[rowIndex][deskIndex]"
+          :cardHeight="this.cardHeight" :cardWidth="this.cardWidth" @studentSelected="onStudentSelected" @insertSmallGrade="onInsertSmallGrade" @updateRating="onUpdateRating"/>
+      </tr>
+    </tbody>
+  </table>
 </template>
   
 <script>
@@ -19,7 +20,7 @@ export default {
       Desks: [],
       cardHeight: "75",
       cardWidth: "115",
-      localClassroomSpecifications: null, 
+      localClassroomSpecifications: null,
     };
   },
   props: {
@@ -39,23 +40,21 @@ export default {
   methods: {
     async getDesks() {
       if (!this.DatabaseLoadDisabled) {
-        this.Desks = await classroomLogic.GetDesks();
+        if (this.limitedLoad) {
+          this.Desks = await classroomLogic.GetLimitedDesks();
+        }
+        else
+          this.Desks = await classroomLogic.GetDesks();
       } else {
         this.Desks = classroomLogic.GetEmptyDesks(this.ClassroomSpecifications);
       }
 
-      console.log(this.Desks);
-      console.log(this.Desks.length);
-      console.log(this.Desks[0]);
-
-      this.localClassroomSpecifications = { 
+      this.localClassroomSpecifications = {
         rows: this.Desks.length,
-        columns: this.Desks[0].length * this.Desks[0][0].length,        
+        columns: this.Desks[0].length * this.Desks[0][0].length,
       };
-      console.log("test");
-      console.log(this.localClassroomSpecifications);
 
-      this.cardHeight = this.calculateHeight(this.localClassroomSpecifications.rows,this.localClassroomSpecifications.columns);
+      this.cardHeight = this.calculateHeight(this.localClassroomSpecifications.rows, this.localClassroomSpecifications.columns);
       this.cardWidth = this.calculateWidth(this.localClassroomSpecifications.columns);
     },
     calculateHeight(rowCount, columnCount) {
@@ -64,11 +63,17 @@ export default {
     calculateWidth(columnCount) {
       return classroomLogic.CalculateWidth(columnCount);
     },
-    onStudentSelected(studentInfo){
+    onStudentSelected(studentInfo) {
       this.$emit('studentSelected', studentInfo);
+    },
+    onInsertSmallGrade(idStudent, isPlus, description){
+      this.$emit('insertSmallGrade', idStudent, isPlus, description);
+    },
+    onUpdateRating(idStudent, activityValue){
+      this.$emit('updateRating', idStudent, activityValue);
     }
   },
-  mounted() {
+  beforeMount() {
     this.getDesks();
   },
 };
@@ -77,16 +82,16 @@ export default {
   
 <style scoped>
 tbody {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-tr{
-    display: flex;
-    justify-content: space-around;
-    padding: 0 10px;
-    width: 100vw;
-    margin-top: 5px;
+tr {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10px;
+  width: 100vw;
+  margin-top: 5px;
 }
 </style>
