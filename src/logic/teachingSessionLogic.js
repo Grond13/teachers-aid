@@ -10,6 +10,8 @@ export async function insertSmallGrade(idStudent, isPlus, description) {
 }
 
 export async function updateRating(idStudent, activityValue){
+    console.log(activityValue);
+
     const result = await teachingSessionConnection.updateRating(idStudent, activityValue);
 
     return result;

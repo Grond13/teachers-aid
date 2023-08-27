@@ -56,6 +56,7 @@ export default defineComponent({
             this.$refs.ClassroomDisplay.getDesks();
         },
         async onUpdateRating(idStudent, activityValue) {
+            
             await TeachingSessionLogic.updateRating(idStudent, activityValue);
 
             this.$refs.ClassroomDisplay.getDesks();

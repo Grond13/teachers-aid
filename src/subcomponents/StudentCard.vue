@@ -87,14 +87,13 @@ export default {
     onMinusRatingClicked(event) {
       //console.log('Minus rating clicked');
       //this.studentInfo.activityValue--;
-      this.$emit('updateRating', this.studentInfo.idStudent, this.studentInfo.activityValue - 1);
+      this.$emit('updateRating', this.studentInfo.idStudent, Number(this.studentInfo.activityValue) - 1);
       event.stopPropagation();
     },
     onPlusRatingClicked(event) {
       //console.log('Plus rating clicked');
       //this.studentInfo.activityValue++;
-      this.$emit('updateRating', this.studentInfo.idStudent, this.studentInfo.activityValue + 1);
-
+      this.$emit('updateRating', this.studentInfo.idStudent, Number(this.studentInfo.activityValue) + 1);
       event.stopPropagation();
     },
     onMinusClicked(event, description) {

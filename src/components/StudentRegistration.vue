@@ -39,6 +39,7 @@ import initialHeader from '../subcomponents/initialHeader.vue';
 import ClassroomDisplay from './ClassroomDisplay.vue';
 import * as StudentRegistrationLogic from '../logic/studentRegistrationLogic.js';
 import { mapActions } from 'vuex';
+import router from '../router';
 
 export default defineComponent({
     name: 'StudentRegistration',
@@ -80,9 +81,11 @@ export default defineComponent({
             // temporary
             //console.log(await StudentRegistrationLogic.registerStudent(this.name, this.surname, this.idLessonTime));
         },
-        onSeatSelected(seat){
-            if(seat.appearance == "empty" && !seat.isTeachersDesk){
+        onSeatSelected(seat){            
+            console.log(seat);
+            if(seat.appearance == "empty" && seat.isTeachersDesk == 0){
                 StudentRegistrationLogic.registerStudent(seat, this.name, this.surname, this.idLessonTime);
+                router.push({ name: 'initial' });
             }
         }
     },

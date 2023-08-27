@@ -71,6 +71,7 @@ export default defineComponent({
     async onNewLessonSubmit(){
       //console.log(this.newLessonName);
       await mainLogic.insertLesson(this.newLessonName);      
+      this.lessons = await mainLogic.getLessonNames();
     },
   },
   async mounted() {
